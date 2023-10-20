@@ -1,10 +1,14 @@
-import React from 'react'
-import Dashboard from "./dashboard";
+import React from "react";
+import { Outlet } from "react-router-dom";
+import DashboardNav from "./dashboardNav";
 
 function dashboardLyout() {
   return (
-    <Dashboard/>
-    )
+    <>
+      <DashboardNav />
+      <Outlet />
+    </>
+  );
 }
 
-export default dashboardLyout
+export default dashboardLyout;

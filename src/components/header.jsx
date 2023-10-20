@@ -153,8 +153,8 @@ function Header() {
               </div>
               <div className="two-col">
                 <div className="reserve-button">
-                  <a href="/tour-detail" className="btn">
-                    Reserve
+                  <a href="/login" className="btn">
+                    login
                   </a>
                 </div>
                 <div className="search">

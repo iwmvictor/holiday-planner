@@ -253,7 +253,7 @@ function home() {
         </div>
         <div className="abt-container">
           <div className="row">
-            <div className="two-col">
+            <div className="two-col col-6">
               <div className="abt-image">
                 <div className="abt-img">
                   <div className="about-image-box big-img">
@@ -269,7 +269,7 @@ function home() {
                 </div>
               </div>
             </div>
-            <div className="two-col">
+            <div className="two-col col-6">
               <div className="abt-content">
                 <div className="line-title">
                   <h4 className="h4-title">About us</h4>
@@ -319,7 +319,7 @@ function home() {
               </div>
             </div>
           </div>
-          <div className="row">
+          <div className="row dest-img-sec">
             <div className="col-8">
               <div className="destination-box">
                 <a href="/destination-detail">
@@ -391,7 +391,7 @@ function home() {
               </div>
             </div>
           </div>
-          <div className="row">
+          <div className="row dest-img-sec">
             <div className="col-12">
               <div className="dest-see-more">
                 <a href="/destination" className="btn">

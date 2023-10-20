@@ -10,6 +10,11 @@ import Signup from "./components/signup";
 import TourDetail from "./components/tourDetail";
 import Tour from "./components/tour";
 import Dashboard from "./components/dashboard";
+import DashboardNav from "./components/dashboardNav";
+import AdminTourMgt from "./components/dashboardTour";
+import AdminPlaces from "./components/dashboardPlace";
+import AdminChat from "./components/dashboardChat";
+import RebaTour from "./components/displaytours";
 
 import "./style/styles.css";
 
@@ -20,12 +25,18 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
           <Route path="/tour-detail" element={<TourDetail />} />
           <Route path="/tour" element={<Tour />} />
         </Route>
-        <Route path="/dashboard" element={<DashboardLayout />} />
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="tour" element={<AdminTourMgt />} />
+          <Route path="places" element={<AdminPlaces />} />
+          <Route path="chat" element={<AdminChat />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/reba" element={<RebaTour />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

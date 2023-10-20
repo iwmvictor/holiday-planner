@@ -1299,7 +1299,7 @@ form.form {
   padding: 5px 10px;
 }
 
-.tour-box-label-inner h4.h4-title{
+.tour-box-label-inner h4.h4-title {
   color: var(--white-color);
 }
 
@@ -1372,18 +1372,17 @@ form.form {
   padding-bottom: 227px;
 }
 
-
-.row.tour-form-container{
+.row.tour-form-container {
   margin-right: 0;
   margin-left: 0;
 }
 
-.tour-filter{
+.tour-filter {
   margin-bottom: 30px;
   background: #00000034;
 }
 
-.no-gutter>[class*=col-] {
+.no-gutter > [class*="col-"] {
   padding-right: 0;
   padding-left: 0;
 }
@@ -1469,17 +1468,17 @@ form.form {
   border-color: var(--yellow-color);
 }
 
-.find-tour-form .input-box{
+.find-tour-form .input-box {
   margin-bottom: 20px;
 }
 
-.checkbox-item{
+.checkbox-item {
   padding-left: 40px;
   position: relative;
   margin-bottom: 15px;
 }
 
-.checkbox-item input[type="checkbox"]{
+.checkbox-item input[type="checkbox"] {
   width: 30px;
   height: 30px;
   color: var(--dark-color);
@@ -1498,9 +1497,9 @@ form.form {
   left: 0;
 }
 
-.checkbox-item input[type="checkbox"]::before{
+.checkbox-item input[type="checkbox"]::before {
   position: absolute;
-  content: '';
+  content: "";
   display: block;
   top: 5px;
   left: 10px;
@@ -1514,34 +1513,34 @@ form.form {
   opacity: 0;
 }
 
-.checkbox-item input[type="checkbox"]:checked{
+.checkbox-item input[type="checkbox"]:checked {
   color: var(--white-color);
   border-color: var(--yellow-color);
   background: var(--yellow-color);
 }
 
-.checkbox-item input[type="checkbox"]:checked::before{
+.checkbox-item input[type="checkbox"]:checked::before {
   opacity: 1;
   transition: var(--transition);
   transform: rotate(45deg) scale(1);
 }
 
-.check-box-label{
+.check-box-label {
   margin: 0;
   cursor: pointer;
   vertical-align: middle;
 }
 
-.find-now-btn.btn{
+.find-now-btn.btn {
   width: 100%;
   margin-top: 10px;
 }
 
-
 /*========CONTACT PAGE=========*/
 
 .contact-hero,
-.tour-hero {
+.tour-hero,
+.detail-hero {
   width: 100%;
   display: flex;
   align-items: center;
@@ -1988,6 +1987,62 @@ footer.footer {
   .newsletter-form .form-input {
     padding-right: 110px;
   }
+  .abt-img {
+    margin-bottom: 30px;
+  }
+  .abt-container .row {
+    flex-direction: column;
+    width: 100%;
+    max-width: 900px;
+  }
+  .abt-container .row .two-col.col-6 {
+    width: 100%;
+    max-width: 100%;
+  }
+  .abt-img .about-image-box {
+    width: 100%;
+    height: 100%;
+  }
+  .destination-box .destination-box-image,
+  .destination-box.big-height .destination-box-image {
+    height: 400px;
+  }
+  .main-destination.common-sec .container .row.dest-img-sec{
+    flex-direction: column;
+    width: 100%;
+  }
+  .main-destination.common-sec .container .row.dest-img-sec .col-8,
+  .main-destination.common-sec .container .row.dest-img-sec .col-4{
+    max-width: 100%;
+  }
+  .main-highlight{
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+  .h2-title{
+    font-size: 35px;
+    line-height: 45px;
+  }
+  .h3-title{
+    font-size: 25px;
+    line-height: 35px;
+  }
+  .main-highlight::after{
+    top: 45px;
+    left: 20px;
+    right: 20px;
+    bottom: 45px;
+  }
+
+}
+
+@media (min-width: 1199px) {
+  .main-highlight::after{
+    top: 31px;
+    left: 31px;
+    right: 31px;
+    bottom: 31px;
+  }
 }
 
 @media (max-width: 850px) {
@@ -2036,5 +2091,416 @@ footer.footer {
 @media (max-width: 660px) {
   .reserve-button {
     display: none;
+  }
+}
+
+@media (max-width: 470px) {
+  .site-branding img{
+    width: 180px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container{
+    max-width: 540px;
+    margin: auto;
+  }
+}
+
+/*===========>> LOGIN <<=============*/
+.login-page {
+  display: flex;
+  height: 100vh;
+  max-height: 100%;
+  align-items: center;
+}
+
+.login {
+  width: 100%;
+  height: 100%;
+  max-height: 100vh;
+  background: var(--white-light-color);
+  align-items: center;
+  display: flex;
+}
+
+.login .container .row {
+  align-items: center;
+}
+
+.col-4.left-side .col-12 {
+  padding: 30px 0;
+}
+
+.login-title {
+  padding: 20px 0;
+}
+
+.login-title p a:hover {
+  text-decoration: none;
+}
+
+.login-title p a {
+  text-decoration: underline;
+  transition: var(--transition);
+}
+
+.login-left {
+  height: 100%;
+  margin-top: 8.5px;
+  border-left: 3px solid rgb(0 0 0 / 16%);
+  border-top: 1px solid rgb(0 0 0 / 16%);
+  border-bottom: 2px solid rgb(0 0 0 / 16%);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.col-12 .checkbox-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  color: var(--dark-color);
+  border: 1px solid var(--dark-color);
+  border-radius: 2px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: o;
+  cursor: pointer;
+  transition: var(--transition);
+  vertical-align: middle;
+  margin-right: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.checkbox-item input[type="checkbox"]::before {
+  position: absolute;
+  content: "";
+  display: block;
+  top: 3px;
+  left: 6px;
+  width: 5px;
+  height: 8px;
+  border-style: solid;
+  border-color: var(--white-color);
+  border-width: 0 3px 3px 0;
+  transform: rotate(90deg) scale(0);
+  transition: var(--transition);
+  opacity: 0;
+}
+
+.checkbox-item input[type="checkbox"]:checked {
+  color: var(--white-color);
+  border-color: var(--yellow-color);
+  background: var(--yellow-color);
+}
+
+.checkbox-item input[type="checkbox"]:checked::before {
+  opacity: 1;
+  transition: var(--transition);
+  transform: rotate(45deg) scale(1);
+}
+
+.login .form-input:focus {
+  border-color: var(--yellow-color);
+  color: var(--yellow-color);
+  background: var(--white-color);
+}
+
+.login .form-input::placeholder {
+  color: rgb(0 0 0 / 16%);
+}
+
+.login-btn button.btn {
+  width: 100%;
+}
+
+.login-line {
+  display: flex;
+  align-items: center;
+}
+
+.login-line hr {
+  width: 100%;
+}
+
+.login-line p {
+  text-transform: uppercase;
+  font-weight: lighter;
+}
+
+.login-buttons {
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.login-buttons button {
+  padding: 12px 20px;
+  outline: 0;
+  border: 0;
+  font-size: 12px;
+  border-radius: 2px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--white-color);
+  transition: var(--transition);
+}
+
+.login-buttons button.google-login {
+  background: var(--yellow-color);
+  opacity: 0.7;
+  text-shadow: 0 0 3px rgb(0 0 0 / 30%);
+}
+
+.login-buttons button.fb-login {
+  background: var(--dark-color);
+  opacity: 0.7;
+}
+
+.login-buttons button:hover {
+  opacity: 1;
+  text-shadow: 0;
+}
+
+.login-right {
+  border: 1px solid var(--white-light-color);
+}
+
+/* .login-right-content,
+.col-4.left-side {
+  height: 100%;
+} */
+
+.login-right-content h2.h2-title {
+  color: var(--white-color);
+}
+
+.login-right-content {
+  align-content: center;
+  text-align: center;
+  padding: 30% 30px;
+  text-shadow: 0 0 2px black;
+}
+
+.login-right-content p {
+  color: var(--white-light-color);
+  font-size: 18px;
+}
+
+.login-right-content p a {
+  color: var(--white-color);
+  text-decoration: underline;
+}
+
+/* signup.css */
+
+.signup-container {
+  width: 920px;
+  max-width: 100%;
+  margin: 40px auto;
+  padding: 40px 20px;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.signup-container .row {
+  flex-direction: row;
+}
+
+.signup-container .row .right-side {
+  margin: 0;
+}
+
+.signup-side-content {
+  height: 100%;
+  align-items: center;
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.signup-side-content .highlight-bg-video {
+  border-radius: 10px;
+  position: absolute;
+  z-index: -1;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(1);
+    filter: sepia(20%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    filter: sepia(0%);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    filter: sepia(20%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.container .signup-side-content .highlight-bg-video video {
+  animation: scaleUp 15s infinite;
+  border: 2px solid var(--yellow-color);
+  padding: 10px;
+  object-fit: cover;
+  transition: 2s ease-in-out;
+}
+
+.signup-cta-text {
+  text-align: center;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 30px 15px;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 0 auto;
+  bottom: 0;
+  transition: all 3s;
+  transition: transform 5s ease-in-out;
+  border: 2px solid var(--yellow-color);
+}
+
+.signup-cta-text h2 {
+  text-transform: capitalize;
+  font-weight: bolder;
+  color: var(--dark-color);
+  text-shadow: 0 0 2px var(--white-color);
+}
+
+.signup-cta-text:hover {
+  transform: rotate(180deg) scale(0.001);
+  opacity: 0.7;
+}
+
+.left-side .signup-title {
+  padding: 0 0 20px 0;
+  margin-top: -20px;
+}
+
+.signup-title .signup-htitle {
+  padding-bottom: 15px;
+  color: var(--dark-color);
+}
+
+/* Create a keyframe animation for the bubbles */
+@keyframes moveBubbles {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Apply the animation to the bubbles */
+.signup-container {
+  position: relative;
+}
+
+/* Create the bubble elements */
+.bubble {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #3498db; /* Bubble color */
+  border-radius: 50%;
+  animation: moveBubbles 4s infinite; /* Use the defined animation */
+  opacity: 0.7;
+}
+
+/* Define individual bubbles with unique positions and sizes */
+.bubble1 {
+  left: 10%;
+  top: 10%;
+  animation-delay: 0s;
+}
+
+.bubble2 {
+  left: 20%;
+  top: 30%;
+  animation-delay: 1s;
+}
+
+.bubble3 {
+  left: 50%;
+  top: 20%;
+  animation-delay: 2s;
+}
+
+.container .signup-side-content .highlight-bg-video video:hover {
+  transform: rotate(50deg);
+  filter: sepia(0%);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+::placeholder {
+  opacity: 0.8;
+}
+
+.signup-title {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.label-input {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.signup-button {
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.signup-bottom-text {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.signup-bottom-text a:hover {
+  text-decoration: underline;
+}
+
+.signup-form .input-box input:focus {
+  border: 2px solid var(--yellow-color);
+  background: var(--white-color);
+}
+
+@media (max-width: 768px) {
+  .signup-container {
+    max-width: 100%;
+    border: none;
+  }
+
+  .form-input {
+    padding: 10px;
   }
 }

@@ -80,6 +80,9 @@ function footer() {
                   <li>
                     <a href="/contact"> Contact us</a>
                   </li>
+                  <li>
+                    <a href="/login"> Admin? Login</a>
+                  </li>
                 </ul>
               </div>
             </div>

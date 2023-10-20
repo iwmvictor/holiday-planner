@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Chart from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
-
+ 
 import {
   BsGrid,
   BsChevronDown,
@@ -16,7 +16,7 @@ import { HiOutlineLogout } from "react-icons/hi";
 import { CiLocationOn, CiPlane } from "react-icons/ci";
 import { GiCommercialAirplane } from "react-icons/gi";
 import { RiCalendarTodoFill } from "react-icons/ri";
-import { BiTimer, BiCreditCard } from "react-icons/bi";
+import { BiTimer, BiCreditCard, BiSlider } from "react-icons/bi";
 import {
   FaRegCalendarAlt,
   FaUmbrellaBeach,
@@ -29,7 +29,7 @@ import {
   MdOutlineMarkUnreadChatAlt,
 } from "react-icons/md";
 
-import userImg from "../assets/avatar.png";
+import userImg from "../assets/admin/logo-icon.svg";
 import dbBg from "../assets/dashboard-div-bg.png";
 import switzerland from "../assets/dashboard-div-switzerland.png";
 import zermat from "../assets/dashboard-div-zermat.png";
@@ -39,6 +39,16 @@ import friend2 from "../assets/friend2.jpg";
 import "../style/dashboard.css";
 
 function dashboard() {
+
+  // //allowing only logged in user to access dashboard
+  // if(!localStorage.getItem("login")){
+  //   alert("Please log into your account first!!")
+  //   window.location.href="/login"
+  // } else{
+  //   window.location.href="/dashboard"
+  // }
+
+
   // Define chart data
   const data = {
     labels: ["January", "February", "March", "April", "May"],
@@ -48,14 +58,14 @@ function dashboard() {
         backgroundColor: "rgba(75, 192, 192, 0.6)",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
-        data: [65, 59, 80, 81, 56, 59, 80, 81],
+        data: [88, 12, 33, 55, 99],
       },
       {
         label: "Unexpected Income",
         backgroundColor: "rgba(255, 99, 132, 0.6)",
         borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 1,
-        data: [32, 45, 25, 18, 36, 45, 32, 23],
+        data: [32, 45, 25, 18, 36],
       },
     ],
   };
@@ -85,97 +95,47 @@ function dashboard() {
     }
   }, []);
 
+  const initialTime = { hours: 16, minutes: 16, seconds: 30 };
+  const [time, setTime] = useState(initialTime);
+
+  const formatTime = (time) => {
+    const hoursStr = String(time.hours).padStart(2, "0");
+    const minutesStr = String(time.minutes).padStart(2, "0");
+    const secondsStr = String(time.seconds).padStart(2, "0");
+    return `${hoursStr}:${minutesStr}:${secondsStr}`;
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) {
+        clearInterval(interval);
+        // Timer has reached zero
+      } else {
+        const newTime = { ...time };
+
+        if (newTime.seconds > 0) {
+          newTime.seconds -= 1;
+        } else {
+          if (newTime.minutes > 0) {
+            newTime.minutes -= 1;
+            newTime.seconds = 59;
+          } else {
+            newTime.hours -= 1;
+            newTime.minutes = 59;
+            newTime.seconds = 59;
+          }
+        }
+
+        setTime(newTime);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [time]);
+
   return (
     <main className="dashboard">
-      <div className="dashboard-navbar" style={{ position: "fixed" }}>
-        <div className="container">
-          <div className="row vrow">
-            <div className="user-data">
-              <div className="row hrow">
-                <div className="user-image">
-                  <img src={userImg} alt="" />
-                </div>
-                <div className="user-id">
-                  <h3 className="h3-title">Hossein</h3>
-                  <span className="user-title">Traveller</span>
-                </div>
-              </div>
-            </div>
-            <div className="nav-main-link">
-              <div className="nav-link">
-                <a href="/dashboard">
-                  <BsGrid /> <span>Dashboard</span>
-                </a>
-              </div>
-              <div className="nav-link">
-                <a href="/place">
-                  <CiLocationOn /> <span>Places</span>
-                </a>
-              </div>
-              <div className="nav-link">
-                <a href="/tour">
-                  <GiCommercialAirplane /> <span>Tours</span>
-                </a>
-              </div>
-              <div className="nav-link">
-                <a href="/tour-detail">
-                  <RiCalendarTodoFill /> <span>Upcoming</span>
-                </a>
-              </div>
-              <div className="nav-link">
-                <a href="/camps">
-                  <FaUmbrellaBeach /> <span>Camps</span>
-                </a>
-              </div>
-              <div className="nav-link">
-                <a href="/calendar">
-                  <FaRegCalendarAlt /> <span>Calendar</span>
-                </a>
-              </div>
-              <div className="nav-link">
-                <a href="/chat">
-                  <BsWechat /> <span>Chat</span>
-                </a>
-              </div>
-            </div>
-            <div className="down-nav-links">
-              <span className="nav-title">Popular Places</span>
-              <div className="nav-place-link">
-                <a href="/">
-                  <span className="yellow">
-                    <GoDotFill />
-                  </span>
-                  <span className="low-op">Oslo</span> / Norway
-                </a>
-              </div>
-              <div className="nav-place-link">
-                <a href="/">
-                  <span className="dark">
-                    <GoDotFill />
-                  </span>
-                  <span className="low-op">Maui</span> / Hawaii
-                </a>
-              </div>
-              <div className="nav-place-link">
-                <a href="/">
-                  <BsChevronDown />{" "}
-                  <span className="show-more"> Show more</span>
-                </a>
-              </div>
-            </div>
-          </div>
-          <hr />
-          <div className="logout">
-            <a href="/">
-              <span className="icon">
-                <HiOutlineLogout />
-              </span>
-              Logout
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="main-content" style={{ marginLeft: "220px" }}>
+      <div className="main-content" style={{ marginLeft: "215px" }}>
         <div className="container">
           <div className="header-nav">
             <div className="row">
@@ -186,11 +146,11 @@ function dashboard() {
               </div>
               <div className="row right-header-nav">
                 <div className="setting">
-                  <span className="settings">
-                    <MdSettings />
+                  <span className="settings" style={{color: '#924aef'}}>
+                    <BiSlider />
                   </span>
                 </div>
-                <div className="theme">
+                <div className="theme" style={{color: '#a5a5a5'}}>
                   <span className="light-them">
                     <MdOutlineLightMode />
                   </span>
@@ -209,10 +169,10 @@ function dashboard() {
                         <div className="row">
                           <div className="text1">
                             <h5 className="h5-title">Total Bookings</h5>
-                            896
+                            <span className="booking-value">845</span>
                           </div>
                           <div className="side-icon">
-                            <FaUmbrellaBeach />
+                            <FaUmbrellaBeach style={{color: '#a5a5a5'}}/>
                           </div>
                         </div>
                       </div>
@@ -231,10 +191,10 @@ function dashboard() {
                         <div className="row">
                           <div className="text1">
                             <h5 className="h5-title">Total Expenses</h5>
-                            896
+                            <span className="expense-value">213</span>
                           </div>
                           <div className="side-icon">
-                            <FaUmbrellaBeach />
+                            <FaUmbrellaBeach style={{color: '#a5a5a5'}} />
                           </div>
                         </div>
                       </div>
@@ -354,7 +314,7 @@ function dashboard() {
                                 <img src={friend2} />
                               </div>
                               <div className="friend-id">
-                                <h6 className="h6-title">Ameria</h6>
+                                <h6 className="h6-title">Ameria Brown</h6>
                                 <p>France</p>
                               </div>
                               <div className="chat-icon">
@@ -375,7 +335,7 @@ function dashboard() {
                         <p>
                           <BiTimer /> <span>Remaining time to buy:</span>
                         </p>
-                        <span className="dash-btn">16:16</span>
+                        <span className="dash-btn">{formatTime(time)}</span>
                       </div>
                       <div className="row ship-country">
                         <div>
