@@ -14,7 +14,9 @@ import DashboardNav from "./components/dashboardNav";
 import AdminTourMgt from "./components/dashboardTour";
 import AdminPlaces from "./components/dashboardPlace";
 import AdminChat from "./components/dashboardChat";
-import RebaTour from "./components/displaytours";
+import RebaTour from "./components/reba";
+import TourLayout from "./components/TourLayout";
+import Users from "./components/dashboardUser"
 
 import "./style/styles.css";
 
@@ -25,18 +27,23 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/tour-detail" element={<TourDetail />} />
-          <Route path="/tour" element={<Tour />} />
+          <Route path="/tour" element={<TourLayout />}>
+            <Route index element={<Tour />} />
+            <Route path=":id" element={<TourDetail />} />
+          </Route>
         </Route>
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="tour" element={<AdminTourMgt />} />
           <Route path="places" element={<AdminPlaces />} />
           <Route path="chat" element={<AdminChat />} />
+          <Route path="user" element={<Users/>}/>
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/reba" element={<RebaTour />} />
         <Route path="/signup" element={<Signup />} />
+
+        {/* <Route path="/tryit" element={<TourDetail/>}/> */}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

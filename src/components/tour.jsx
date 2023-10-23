@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link,Outlet } from "react-router-dom";
 
 import {
   FaAngleRight,
@@ -9,7 +11,7 @@ import {
   FaSearch,
   FaUserFriends,
   FaEnvelope,
-  FaPhoneAlt
+  FaPhoneAlt,
 } from "react-icons/fa";
 
 import tourBanner from "../assets/tour-banner.jpg";
@@ -46,7 +48,39 @@ function tour() {
     backgroundColor: "#c29d59",
   };
 
+  const [tourz, setTourz] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Define an async function to fetch data from the API
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://holiday-api-zj3a.onrender.com/api/v1/tour/all"
+        );
+        setTourz(response.data); // Assuming the data is an array of tours
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    };
+
+    // Call the async function to fetch data
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
+    <>
     <main className="tour">
       <div className="tour-hero" style={backgroundStyle}>
         <div className="col-12">
@@ -105,420 +139,358 @@ function tour() {
                 </div>
                 <div className="tour-filter-result">
                   <div className="row">
-                    <div className="col-6">
-                      <div className="tour-box">
-                        <div
-                          className="tour-box-image"
-                          style={tboxImgStyle2}
-                        ></div>
-                        <div className="tour-box-content">
-                          <div className="tour-box-label">
-                            <div className="tour-box-label-inner">
-                              <h4 className="h4-title">Italy</h4>
+                    {tourz.map((tour) => (
+                      <div key={tour._id} className="col-6">
+                        <div className="tour-box">
+                          <div className="tour-box-image" style={tboxImgStyle2}>
+                            <span className="discount-label">
+                              {" "}
+                              {tour.Discount} off
+                            </span>
+                          </div>
+                          <div className="tour-box-content">
+                            <div className="tour-box-label">
+                              <div className="tour-box-label-inner">
+                                <h4 className="h4-title">
+                                  {" "}
+                                  {tour.Description}
+                                </h4>
+                              </div>
                             </div>
-                          </div>
-                          <div className="tour-box-title">
-                            <h4 className="h4-title">
-                              Holidays Planners is a World Leading Online Tour
-                              Booking Platform
-                            </h4>
-                          </div>
-                          <div className="tour-box-description">
-                            <p>
-                              Far far away, behind the word mountains, far from
-                              the countries Vokalia and Consonantia, there live
-                              the blind texts. Separated they live in
-                              Bookmarksgrove.
-                            </p>
-                          </div>
-                          <div className="tour-info-box">
-                            <div className="row">
-                              <div className="col-6">
-                                <div className="tour-info">
-                                  <div className="tour-info-icon">
-                                    <i>
-                                      <FaClock />
-                                    </i>
+                            <div className="tour-box-title">
+                              <h4 className="h4-title">
+                                Holidays Planners is a World Leading Online Tour
+                                Booking Platform
+                              </h4>
+                            </div>
+                            <div className="tour-box-description">
+                              <p>
+                                Far far away, behind the word mountains, far
+                                from the countries Vokalia and Consonantia,
+                                there live the blind texts. Separated they live
+                                in Bookmarksgrove.
+                              </p>
+                            </div>
+                            <div className="tour-info-box">
+                              <div className="row">
+                                <div className="col-6">
+                                  <div className="tour-info">
+                                    <div className="tour-info-icon">
+                                      <i>
+                                        <FaClock />
+                                      </i>
+                                    </div>
+                                    <div className="tour-info-content">
+                                      <h5 className="h6-title">Duration</h5>
+                                      <p> {tour.Duration}</p>
+                                    </div>
                                   </div>
-                                  <div className="tour-info-content">
-                                    <h5 className="h6-title">Duration</h5>
-                                    <p>6 Days 3 hours</p>
+                                </div>
+                                <div className="col-6">
+                                  <div className="tour-info">
+                                    <div className="tour-info-icon">
+                                      <i>
+                                        <FaUserFriends />
+                                      </i>
+                                    </div>
+                                    <div className="tour-info-content">
+                                      <h5 className="h6-title">Group Size</h5>
+                                      <p>15+ People</p>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                              <div className="col-6">
-                                <div className="tour-info">
-                                  <div className="tour-info-icon">
-                                    <i>
-                                      <FaUserFriends />
-                                    </i>
-                                  </div>
-                                  <div className="tour-info-content">
-                                    <h5 className="h6-title">Group Size</h5>
-                                    <p>15+ People</p>
-                                  </div>
-                                </div>
+                            </div>
+                            <div className="tour-box-bottom">
+                              <div className="tour-price">
+                                <h3 className="h3-title"> {tour.Price} </h3>
                               </div>
-                            </div>
-                          </div>
-                          <div className="tour-box-bottom">
-                            <div className="tour-price">
-                              <h3 className="h3-title">$2500</h3>
-                            </div>
-                            <div className="book-now-button">
-                              <a href="/tour-detail" className="btn">
-                                <span>Book Now</span>
-                              </a>
+                              <Link to={`/tour/${tour._id}`}>
+                                <div className="book-now-button">
+                                  <span className="btn">Book Now</span>
+                                </div>
+                              </Link>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="tour-box">
-                        <div className="tour-box-image" style={tboxImgStyle2}>
-                          <span className="discount-label">15% off</span>
-                        </div>
-                        <div className="tour-box-content">
-                          <div className="tour-box-label">
-                            <div className="tour-box-label-inner">
-                              <h4 className="h4-title">Greece</h4>
-                            </div>
-                          </div>
-                          <div className="tour-box-title">
-                            <h4 className="h4-title">
-                              Holidays Planners is a World Leading Online Tour
-                              Booking Platform
-                            </h4>
-                          </div>
-                          <div className="tour-box-description">
-                            <p>
-                              Far far away, behind the word mountains, far from
-                              the countries Vokalia and Consonantia, there live
-                              the blind texts. Separated they live in
-                              Bookmarksgrove.
-                            </p>
-                          </div>
-                          <div className="tour-info-box">
-                            <div className="row">
-                              <div className="col-6">
-                                <div className="tour-info">
-                                  <div className="tour-info-icon">
-                                    <i>
-                                      <FaClock />
-                                    </i>
-                                  </div>
-                                  <div className="tour-info-content">
-                                    <h5 className="h6-title">Duration</h5>
-                                    <p>6 Days 3 hours</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="col-6">
-                                <div className="tour-info">
-                                  <div className="tour-info-icon">
-                                    <i>
-                                      <FaUserFriends />
-                                    </i>
-                                  </div>
-                                  <div className="tour-info-content">
-                                    <h5 className="h6-title">Group Size</h5>
-                                    <p>15+ People</p>
-                                  </div>
-                                </div>
+                    ))}
+                    {/* <div className="col-6">
+                        <div className="tour-box">
+                          <div
+                            className="tour-box-image"
+                            style={tboxImgStyle3}
+                          ></div>
+                          <div className="tour-box-content">
+                            <div className="tour-box-label">
+                              <div className="tour-box-label-inner">
+                                <h4 className="h4-title">Switzerland</h4>
                               </div>
                             </div>
-                          </div>
-                          <div className="tour-box-bottom">
-                            <div className="tour-price">
-                              <h3 className="h3-title">$2500</h3>
+                            <div className="tour-box-title">
+                              <h4 className="h4-title">
+                                Holiday Planners is a World Leading Online Tour
+                                Booking Platform
+                              </h4>
                             </div>
-                            <div className="book-now-button">
-                              <a href="/tour-detail" className="btn">
-                                <span>Book Now</span>
-                              </a>
+                            <div className="tour-box-description">
+                              <p>
+                                Far far away, behind the word mountains, far
+                                from the countries Vokalia and Consonantia,
+                                there live the blind texts. Separated they live
+                                in Bookmarksgrove.
+                              </p>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="tour-box">
-                        <div
-                          className="tour-box-image"
-                          style={tboxImgStyle3}
-                        ></div>
-                        <div className="tour-box-content">
-                          <div className="tour-box-label">
-                            <div className="tour-box-label-inner">
-                              <h4 className="h4-title">Switzerland</h4>
-                            </div>
-                          </div>
-                          <div className="tour-box-title">
-                            <h4 className="h4-title">
-                              Holiday Planners is a World Leading Online Tour
-                              Booking Platform
-                            </h4>
-                          </div>
-                          <div className="tour-box-description">
-                            <p>
-                              Far far away, behind the word mountains, far from
-                              the countries Vokalia and Consonantia, there live
-                              the blind texts. Separated they live in
-                              Bookmarksgrove.
-                            </p>
-                          </div>
-                          <div className="tour-info-box">
-                            <div className="row">
-                              <div className="col-6">
-                                <div className="tour-info">
-                                  <div className="tour-info-icon">
-                                    <i>
-                                      <FaClock />
-                                    </i>
-                                  </div>
-                                  <div className="tour-info-content">
-                                    <h5 className="h6-title">Duration</h5>
-                                    <p>7 days 8 hours</p>
+                            <div className="tour-info-box">
+                              <div className="row">
+                                <div className="col-6">
+                                  <div className="tour-info">
+                                    <div className="tour-info-icon">
+                                      <i>
+                                        <FaClock />
+                                      </i>
+                                    </div>
+                                    <div className="tour-info-content">
+                                      <h5 className="h6-title">Duration</h5>
+                                      <p>7 days 8 hours</p>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div className="col-6">
-                                <div className="tour-info">
-                                  <div className="tour-info-icon">
-                                    <i>
-                                      <FaUserFriends />
-                                    </i>
-                                  </div>
-                                  <div className="tour-info-content">
-                                    <h5 className="h6-title">Group Size</h5>
-                                    <p>50+ People</p>
+                                <div className="col-6">
+                                  <div className="tour-info">
+                                    <div className="tour-info-icon">
+                                      <i>
+                                        <FaUserFriends />
+                                      </i>
+                                    </div>
+                                    <div className="tour-info-content">
+                                      <h5 className="h6-title">Group Size</h5>
+                                      <p>50+ People</p>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div className="tour-box-bottom">
-                            <div className="tour-price">
-                              <h3 className="h3-title">$750</h3>
-                            </div>
-                            <div className="book-now-button">
-                              <a href="/tour-detail" className="btn">
-                                <span>Book Now</span>
-                              </a>
+                            <div className="tour-box-bottom">
+                              <div className="tour-price">
+                                <h3 className="h3-title">$750</h3>
+                              </div>
+                              <div className="book-now-button">
+                                <a href="/tour-detail" className="btn">
+                                  <span>Book Now</span>
+                                </a>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="tour-box">
-                        <div
-                          className="tour-box-image"
-                          style={tboxImgStyle1}
-                        ></div>
-                        <div className="tour-box-content">
-                          <div className="tour-box-label">
-                            <div className="tour-box-label-inner">
-                              <h4 className="h4-title">Italy</h4>
+                      <div className="col-6">
+                        <div className="tour-box">
+                          <div
+                            className="tour-box-image"
+                            style={tboxImgStyle1}
+                          ></div>
+                          <div className="tour-box-content">
+                            <div className="tour-box-label">
+                              <div className="tour-box-label-inner">
+                                <h4 className="h4-title">Italy</h4>
+                              </div>
                             </div>
-                          </div>
-                          <div className="tour-box-title">
-                            <h4 className="h4-title">
-                              Holiday Planners is a World Leading Online Tour
-                              Booking Platform
-                            </h4>
-                          </div>
-                          <div className="tour-box-description">
-                            <p>
-                              Far far away, behind the word mountains, far from
-                              the countries Vokalia and Consonantia, there live
-                              the blind texts. Separated they live in
-                              Bookmarksgrove.
-                            </p>
-                          </div>
-                          <div className="tour-info-box">
-                            <div className="row">
-                              <div className="col-6">
-                                <div className="tour-info">
-                                  <div className="tour-info-icon">
-                                    <i>
-                                      <FaClock />
-                                    </i>
+                            <div className="tour-box-title">
+                              <h4 className="h4-title">
+                                Holiday Planners is a World Leading Online Tour
+                                Booking Platform
+                              </h4>
+                            </div>
+                            <div className="tour-box-description">
+                              <p>
+                                Far far away, behind the word mountains, far
+                                from the countries Vokalia and Consonantia,
+                                there live the blind texts. Separated they live
+                                in Bookmarksgrove.
+                              </p>
+                            </div>
+                            <div className="tour-info-box">
+                              <div className="row">
+                                <div className="col-6">
+                                  <div className="tour-info">
+                                    <div className="tour-info-icon">
+                                      <i>
+                                        <FaClock />
+                                      </i>
+                                    </div>
+                                    <div className="tour-info-content">
+                                      <h5 className="h6-title">Duration</h5>
+                                      <p>2 days</p>
+                                    </div>
                                   </div>
-                                  <div className="tour-info-content">
-                                    <h5 className="h6-title">Duration</h5>
-                                    <p>2 days</p>
+                                </div>
+                                <div className="col-6">
+                                  <div className="tour-info">
+                                    <div className="tour-info-icon">
+                                      <i>
+                                        <FaUserFriends />
+                                      </i>
+                                    </div>
+                                    <div className="tour-info-content">
+                                      <h5 className="h6-title">Group Size</h5>
+                                      <p>6 People</p>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                              <div className="col-6">
-                                <div className="tour-info">
-                                  <div className="tour-info-icon">
-                                    <i>
-                                      <FaUserFriends />
-                                    </i>
-                                  </div>
-                                  <div className="tour-info-content">
-                                    <h5 className="h6-title">Group Size</h5>
-                                    <p>6 People</p>
-                                  </div>
-                                </div>
+                            </div>
+                            <div className="tour-box-bottom">
+                              <div className="tour-price">
+                                <h3 className="h3-title">$1200</h3>
                               </div>
-                            </div>
-                          </div>
-                          <div className="tour-box-bottom">
-                            <div className="tour-price">
-                              <h3 className="h3-title">$1200</h3>
-                            </div>
-                            <div className="book-now-button">
-                              <a href="/tour-detail" className="btn">
-                                <span>Book Now</span>
-                              </a>
+                              <div className="book-now-button">
+                                <a href="/tour-detail" className="btn">
+                                  <span>Book Now</span>
+                                </a>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="tour-box">
-                        <div className="tour-box-image" style={tboxImgStyle2}>
-                          <span className="discount-label">17% off</span>
-                        </div>
-                        <div className="tour-box-content">
-                          <div className="tour-box-label">
-                            <div className="tour-box-label-inner">
-                              <h4 className="h4-title">Greece</h4>
-                            </div>
+                      <div className="col-6">
+                        <div className="tour-box">
+                          <div className="tour-box-image" style={tboxImgStyle2}>
+                            <span className="discount-label">17% off</span>
                           </div>
-                          <div className="tour-box-title">
-                            <h4 className="h4-title">
-                              Holiday Planners is a World Leading Online Tour
-                              Booking Platform
-                            </h4>
-                          </div>
-                          <div className="tour-box-description">
-                            <p>
-                              Far far away, behind the word mountains, far from
-                              the countries Vokalia and Consonantia, there live
-                              the blind texts. Separated they live in
-                              Bookmarksgrove.
-                            </p>
-                          </div>
-                          <div className="tour-info-box">
-                            <div className="row">
-                              <div className="col-6">
-                                <div className="tour-info">
-                                  <div className="tour-info-icon">
-                                    <i>
-                                      <FaClock />
-                                    </i>
-                                  </div>
-                                  <div className="tour-info-content">
-                                    <h5 className="h6-title">Duration</h5>
-                                    <p>6 days 3 hours</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="col-6">
-                                <div className="tour-info">
-                                  <div className="tour-info-icon">
-                                    <i>
-                                      <FaUserFriends />
-                                    </i>
-                                  </div>
-                                  <div className="tour-info-content">
-                                    <h5 className="h6-title">Group Size</h5>
-                                    <p>15+ People</p>
-                                  </div>
-                                </div>
+                          <div className="tour-box-content">
+                            <div className="tour-box-label">
+                              <div className="tour-box-label-inner">
+                                <h4 className="h4-title">Greece</h4>
                               </div>
                             </div>
-                          </div>
-                          <div className="tour-box-bottom">
-                            <div className="tour-price">
-                              <h3 className="h3-title">$2500</h3>
+                            <div className="tour-box-title">
+                              <h4 className="h4-title">
+                                Holiday Planners is a World Leading Online Tour
+                                Booking Platform
+                              </h4>
                             </div>
-                            <div className="book-now-button">
-                              <a href="/tour-detail" className="btn">
-                                <span>Book Now</span>
-                              </a>
+                            <div className="tour-box-description">
+                              <p>
+                                Far far away, behind the word mountains, far
+                                from the countries Vokalia and Consonantia,
+                                there live the blind texts. Separated they live
+                                in Bookmarksgrove.
+                              </p>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="tour-box">
-                        <div
-                          className="tour-box-image"
-                          style={tboxImgStyle3}
-                        ></div>
-                        <div className="tour-box-content">
-                          <div className="tour-box-label">
-                            <div className="tour-box-label-inner">
-                              <h4 className="h4-title">Switzerland</h4>
-                            </div>
-                          </div>
-                          <div className="tour-box-title">
-                            <h4 className="h4-title">
-                              Holiday Planners is a World Leading Online Tour
-                              Booking Platform
-                            </h4>
-                          </div>
-                          <div className="tour-box-description">
-                            <p>
-                              Far far away, behind the word mountains, far from
-                              the countries Vokalia and Consonantia, there live
-                              the blind texts. Separated they live in
-                              Bookmarksgrove.
-                            </p>
-                          </div>
-                          <div className="tour-info-box">
-                            <div className="row">
-                              <div className="col-6">
-                                <div className="tour-info">
-                                  <div className="tour-info-icon">
-                                    <i>
-                                      <FaClock />
-                                    </i>
-                                  </div>
-                                  <div className="tour-info-content">
-                                    <h5 className="h6-title">Duration</h5>
-                                    <p>7 days 8 hours</p>
+                            <div className="tour-info-box">
+                              <div className="row">
+                                <div className="col-6">
+                                  <div className="tour-info">
+                                    <div className="tour-info-icon">
+                                      <i>
+                                        <FaClock />
+                                      </i>
+                                    </div>
+                                    <div className="tour-info-content">
+                                      <h5 className="h6-title">Duration</h5>
+                                      <p>6 days 3 hours</p>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div className="col-6">
-                                <div className="tour-info">
-                                  <div className="tour-info-icon">
-                                    <i>
-                                      <FaUserFriends />
-                                    </i>
-                                  </div>
-                                  <div className="tour-info-content">
-                                    <h5 className="h6-title">Group Size</h5>
-                                    <p>50+ People</p>
+                                <div className="col-6">
+                                  <div className="tour-info">
+                                    <div className="tour-info-icon">
+                                      <i>
+                                        <FaUserFriends />
+                                      </i>
+                                    </div>
+                                    <div className="tour-info-content">
+                                      <h5 className="h6-title">Group Size</h5>
+                                      <p>15+ People</p>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div className="tour-box-bottom">
-                            <div className="tour-price">
-                              <h3 className="h3-title">$750</h3>
-                            </div>
-                            <div className="book-now-button">
-                              <a href="/tour-detail" className="btn">
-                                <span>Book Now</span>
-                              </a>
+                            <div className="tour-box-bottom">
+                              <div className="tour-price">
+                                <h3 className="h3-title">$2500</h3>
+                              </div>
+                              <div className="book-now-button">
+                                <a href="/tour-detail" className="btn">
+                                  <span>Book Now</span>
+                                </a>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                      <div className="col-6">
+                        <div className="tour-box">
+                          <div
+                            className="tour-box-image"
+                            style={tboxImgStyle3}
+                          ></div>
+                          <div className="tour-box-content">
+                            <div className="tour-box-label">
+                              <div className="tour-box-label-inner">
+                                <h4 className="h4-title">Switzerland</h4>
+                              </div>
+                            </div>
+                            <div className="tour-box-title">
+                              <h4 className="h4-title">
+                                Holiday Planners is a World Leading Online Tour
+                                Booking Platform
+                              </h4>
+                            </div>
+                            <div className="tour-box-description">
+                              <p>
+                                Far far away, behind the word mountains, far
+                                from the countries Vokalia and Consonantia,
+                                there live the blind texts. Separated they live
+                                in Bookmarksgrove.
+                              </p>
+                            </div>
+                            <div className="tour-info-box">
+                              <div className="row">
+                                <div className="col-6">
+                                  <div className="tour-info">
+                                    <div className="tour-info-icon">
+                                      <i>
+                                        <FaClock />
+                                      </i>
+                                    </div>
+                                    <div className="tour-info-content">
+                                      <h5 className="h6-title">Duration</h5>
+                                      <p>7 days 8 hours</p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="col-6">
+                                  <div className="tour-info">
+                                    <div className="tour-info-icon">
+                                      <i>
+                                        <FaUserFriends />
+                                      </i>
+                                    </div>
+                                    <div className="tour-info-content">
+                                      <h5 className="h6-title">Group Size</h5>
+                                      <p>50+ People</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="tour-box-bottom">
+                              <div className="tour-price">
+                                <h3 className="h3-title">$750</h3>
+                              </div>
+                              <div className="book-now-button">
+                                <a href="/tour-detail" className="btn">
+                                  <span>Book Now</span>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div> */}
                   </div>
-
                   <div className="row">
                     <div className="col-12">
                       <ul className="pagination">
@@ -542,6 +514,7 @@ function tour() {
                       </ul>
                     </div>
                   </div>
+                  
                 </div>
               </div>
             </div>
@@ -720,7 +693,10 @@ function tour() {
                   </div>
                 </div>
 
-                <div className="widget why-book-us" style={{background: '#f6f6f6',}}>
+                <div
+                  className="widget why-book-us"
+                  style={{ background: "#f6f6f6" }}
+                >
                   <div className="line-title">
                     <h4 className="h4-title">Why Book With Us?</h4>
                   </div>
@@ -776,9 +752,9 @@ function tour() {
         </div>
       </div>
     </main>
+    <Outlet />
+    </>
   );
 }
 
 export default tour;
-
-

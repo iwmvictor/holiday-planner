@@ -1,90 +1,57 @@
 import React from "react";
 
+import { BiPlusCircle } from "react-icons/bi";
+import { BsPencilFill } from "react-icons/bs";
+import { FaTrash } from "react-icons/fa";
+
 import abtImg from "../assets/about-banner.jpg";
 
 function dashboardTour() {
   return (
-    <main className="dashboard-tour" style={{ marginLeft: "210px" }}>
-      <div className="tour-mgt">
-        <div className="tour-container">
-          <div className="tour-list">
-            <div className="tour-list-table">
-              <div className="tour-mgt-header">
-                <div className="row">
-                  <div className="tour-id tour-col">
-                    <h4 className="h4-dtitle">tour id</h4>
-                  </div>
-                  <div className="tour-title tour-col">
-                    <h4 className="h4-dtitle">title</h4>
-                  </div>
-                  <div className="tour-duration tour-col">
-                    <h4 className="h4-dtitle">duration</h4>
-                  </div>
-                  <div className="tour-group-size tour-col">
-                    <h4 className="h4-dtitle">tour date</h4>
-                  </div>
-                  <div className="tour-price tour-col">
-                    <h4 className="h4-dtitle">price </h4>
-                  </div>
+    <section className="dashboard-main">
+      <div className="dashboard-tour-sec">
+        <div className="container">
+          <div className="row">
+            <div className="dashboard-tour-main">
+              <div className="dashboard-tour-header">
+                <div className="section-title">
+                  <h2>tours</h2>
+                </div>
+                <div className="dashboard-tour-button">
+                  <a className="btn add-tour-btn">
+                    <BiPlusCircle style={{ fontSize: "21px" }} />{" "}
+                    <span>add tour</span>
+                  </a>
                 </div>
               </div>
-
-              {/* content/tours */}
-              <div className="tour-mgt-body">
-                <div className="tour">
-                  <div className="row">
-                    <div className="tour-id">
-                      <span id="tourId" className="tourId">
-                        001
-                      </span>
-                    </div>
-                    <div className="tour-title">
-                      <span id="tourTitle" className="tourTitle">
-                        Cultural tour
-                      </span>
-                    </div>
-                    <div className="tour-duration">
-                      <span id="tourDuration" className="tourDuration">
-                        2days 6hours
-                      </span>
-                    </div>
-                    <div className="tour-group-size">
-                      <span id="tourGroupSize" className="tourGroupSize">
-                        19/10/2023
-                      </span>
-                    </div>
-                    <div className="tour-price">
-                      <span id="tourPrice" className="tourPrice">
-                        $ 3500
-                      </span>
+            </div>
+            <div className="dashboard-tour-main">
+              <div className="dashboard-container container">
+                <div className="row">
+                  <div className="dashboard-tour-table-header">
+                    <div className="row">
+                      <span className="table-header col-2">destination</span>
+                      <span className="table-header col-3">duration</span>
+                      <span className="table-header col-3">group size</span>
+                      <span className="table-header col-2">price</span>
+                      <span className="table-header col-2">actions</span>
                     </div>
                   </div>
-                </div>
-                <div className="tour">
-                  <div className="row">
-                    <div className="tour-id">
-                      <span id="tourId" className="tourId">
-                        001
+                  <div className="dashboard-tour-table-content">
+                    <div className="row">
+                      <span className="destinationValue col-2">Italy</span>
+                      <span className="destinationValue col-3">
+                        7 days 8 hours
                       </span>
-                    </div>
-                    <div className="tour-title">
-                      <span id="tourTitle" className="tourTitle">
-                        Cultural tour
-                      </span>
-                    </div>
-                    <div className="tour-duration">
-                      <span id="tourDuration" className="tourDuration">
-                        2days 6hours
-                      </span>
-                    </div>
-                    <div className="tour-group-size">
-                      <span id="tourGroupSize" className="tourGroupSize">
-                        19/10/2023
-                      </span>
-                    </div>
-                    <div className="tour-price">
-                      <span id="tourPrice" className="tourPrice">
-                        $ 3500
+                      <span className="destinationValue col-3">50+ people</span>
+                      <span className="destinationValue col-2">$ 750</span>
+                      <span className="destinationValue col-2">
+                        <button className="table-action-btn">
+                          <BsPencilFill />
+                        </button>
+                        <button className="table-action-btn">
+                          <FaTrash />
+                        </button>
                       </span>
                     </div>
                   </div>
@@ -94,7 +61,7 @@ function dashboardTour() {
           </div>
         </div>
       </div>
-    </main>
+    </section>
   );
 }
 
