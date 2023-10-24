@@ -1,16 +1,35 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useContext } from 'react';
 
 function TourDetail() {
-  const { Tour, setTour } = useContext(TourContent)
-  const { name } = useParams();
-  console.log(Tour, name);
-  const single = Tour.find((item) => item._id == name);
-  if(!single){
-    return <div>Sorry, tour doesn't exist</div>
+  const [tours, setTours] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Define an async function to fetch data from the API
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://holiday-api-zj3a.onrender.com/api/v1/tour/all');
+        setTours(response.data); // Assuming the data is an array of tours
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    };
+
+    // Call the async function to fetch data
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
   }
 
   return (

@@ -9,10 +9,14 @@ import {
   BsCalendar2EventFill,
   BsPencilFill,
 } from "react-icons/bs";
-import { GiCommercialAirplane,GiPerpendicularRings, GiWaterSplash, } from "react-icons/gi";
+import {
+  GiCommercialAirplane,
+  GiPerpendicularRings,
+  GiWaterSplash,
+} from "react-icons/gi";
 import { IoNotifications, IoNotificationsCircleOutline } from "react-icons/io5";
-import { RiCompassDiscoverFill,  } from "react-icons/ri";
-import { MdHistoryEdu,  } from "react-icons/md";
+import { RiCompassDiscoverFill } from "react-icons/ri";
+import { MdHistoryEdu } from "react-icons/md";
 import {
   FaAngleRight,
   FaCalendarCheck,
@@ -25,7 +29,7 @@ import {
   FaTrash,
   FaUsers,
 } from "react-icons/fa6";
-import { SiHomeadvisor } from 'react-icons/si'
+import { SiHomeadvisor } from "react-icons/si";
 
 import logoImg from "../assets/logo.png";
 
@@ -302,7 +306,7 @@ function reba() {
                       <p className="section-subtitle">welcome back!</p>
                     </div>
                     <div className="right-side">
-                      <div className="search input-box">
+                      <div className="search input-box no-arrow">
                         <span className="icon">
                           <FaSearch />
                         </span>
@@ -317,7 +321,10 @@ function reba() {
                       </div>
                       <div className="add-tour-button">
                         <a className="btn add-tour-btn">
-                          <BiPlusCircle /> <span>add tour</span>
+                          <BiPlusCircle
+                            style={{ fontSize: "24px", marginRight: "5px" }}
+                          />{" "}
+                          <span>add tour</span>
                         </a>
                       </div>
                     </div>
@@ -327,17 +334,43 @@ function reba() {
               <div className="dashboard-home-main">
                 <div className="container">
                   <div className="row">
-                    <div className="home-tour-box">
-                      <h6>Project</h6>
-                      <ul>
-                        <li><a><SiHomeadvisor/> Adventural</a></li>
-                        <li><a><GiPerpendicularRings/> Adventural</a></li>
-                        <li><a><GiWaterSplash/> Seaside</a></li>
-                        <li><a><RiCompassDiscoverFill/> Discovery</a></li>
-                        <li><a><MdHistoryEdu/> Discovery</a></li>
-                      </ul>
+                    <div className="dashboard-main-sec">
+                      <div className="row">
+                        <div className="home-tour-box">
+                          <h4>Project</h4>
+                          <ul>
+                            <li>
+                              <a>
+                                <SiHomeadvisor /> <span>Adventural</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a>
+                                <GiPerpendicularRings /> <span>Adventural</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a>
+                                <GiWaterSplash /> <span>Seaside</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a>
+                                <RiCompassDiscoverFill /> <span>Discovery</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a>
+                                <MdHistoryEdu /> <span>Discovery</span>
+                              </a>
+                            </li>
+                          </ul>
+                          <a className="box-more-btn">see more</a>
+                        </div>
+                        <div className="home-tour-count"></div>
+                      </div>
                     </div>
-                    <div className="home-tour-count"></div>
+                    <div className="dashboard-main-side"></div>
                   </div>
                 </div>
               </div>
