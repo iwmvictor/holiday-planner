@@ -21,9 +21,12 @@ function dashboardUser() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [userForEdit, setUserForEdit] = useState(null);
 
-  const openModal = () => {
+  const openModal = (user) => {
+    // console.log("User date for edit: ", user);
     setModalOpen(true);
+    setUserForEdit(user); //pre-fill user data in input fields
   };
 
   const closeModal = () => {
@@ -132,7 +135,7 @@ function dashboardUser() {
                           width: "100%",
                           top: "0",
                           left: "0",
-                          background: '#2b2b2b80',
+                          background: "#2b2b2b80",
                         }}
                       >
                         <div className="edit-user">
@@ -149,6 +152,16 @@ function dashboardUser() {
                                   type="text"
                                   placeholder="fullname"
                                   className="form-input"
+                                  value={
+                                    userForEdit ? userForEdit.fullNames : ""
+                                  }
+                                  onChange={(e) => {
+                                    // Update the userForEdit state when the input changes
+                                    setUserForEdit({
+                                      ...userForEdit,
+                                      fullNames: e.target.value,
+                                    });
+                                  }}
                                 />
                               </span>
                               <span className="input-box no-arrow">
@@ -159,6 +172,14 @@ function dashboardUser() {
                                   type="email"
                                   placeholder=" email address"
                                   className="form-input"
+                                  value={userForEdit ? userForEdit.email : ""}
+                                  onChange={(e) => {
+                                    // Update the userForEdit state when the input changes
+                                    setUserForEdit({
+                                      ...userForEdit,
+                                      email: e.target.value,
+                                    });
+                                  }}
                                 />
                               </span>
                               <span className="input-box no-arrow">
@@ -169,6 +190,16 @@ function dashboardUser() {
                                   type="number"
                                   placeholder=" phone number"
                                   className="form-input"
+                                  value={
+                                    userForEdit ? userForEdit.phoneNumber : ""
+                                  }
+                                  onChange={(e) => {
+                                    // Update the userForEdit state when the input changes
+                                    setUserForEdit({
+                                      ...userForEdit,
+                                      phoneNumber: e.target.value,
+                                    });
+                                  }}
                                 />
                               </span>
                               <span className="input-box no-arrow">
@@ -179,6 +210,16 @@ function dashboardUser() {
                                   type="text"
                                   placeholder=" location"
                                   className="form-input"
+                                  value={
+                                    userForEdit ? userForEdit.location : ""
+                                  }
+                                  onChange={(e) => {
+                                    // Update the userForEdit state when the input changes
+                                    setUserForEdit({
+                                      ...userForEdit,
+                                      location: e.target.value,
+                                    });
+                                  }}
                                 />
                               </span>
                               <span className="input-box no-arrow">
@@ -189,6 +230,14 @@ function dashboardUser() {
                                   type="text"
                                   placeholder="Role[status]"
                                   className="form-input"
+                                  value={userForEdit ? userForEdit.role : ""}
+                                  onChange={(e) => {
+                                    // Update the userForEdit state when the input changes
+                                    setUserForEdit({
+                                      ...userForEdit,
+                                      role: e.target.value,
+                                    });
+                                  }}
                                 />
                               </span>
                               <span className="edit-form-button">
@@ -325,7 +374,7 @@ function dashboardUser() {
                               <div className="user-action col-2">
                                 <button
                                   className="table-action-btn"
-                                  onClick={openModal}
+                                  onClick={() => openModal(user)}
                                 >
                                   <BsPencilFill />
                                 </button>

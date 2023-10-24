@@ -1406,6 +1406,17 @@ ul {
   background: var(--background-light);
 }
 
+.edit-tour {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  max-width: 100%;
+  box-shadow: var(--box-shadow);
+  transform: translate(-50%, -50%);
+  background: var(--background-light);
+  padding: 20px;
+}
+
 form.edit-user-form h3 {
   padding: 15px 0;
   font-size: 24px;
@@ -1426,9 +1437,9 @@ form.edit-user-form span.input-box input {
   transition: var(--transition);
 }
 
-form.edit-user-form span.input-box input::placeholder{
+form.edit-user-form span.input-box input::placeholder {
   text-transform: capitalize;
-  opacity: .2;
+  opacity: 0.2;
   font-weight: lighter;
   color: var(--yellow-color);
 }
@@ -1438,12 +1449,21 @@ form.edit-user-form span.input-box input:focus {
   font-size: 18px;
 }
 
-form.edit-user-form span.edit-form-button button.cancel-edit-btn{
-margin: 5px 10px 0 0;
+form.edit-user-form span.edit-form-button button.cancel-edit-btn {
+  margin: 5px 10px 0 0;
   color: var(--white-color);
-background: var(--dark-color);
+  background: var(--dark-color);
 }
 
-form.edit-user-form span.edit-form-button button.cancel-edit-btn:hover{
+form.edit-user-form span.edit-form-button button.cancel-edit-btn:hover {
   background: var(--white-color);
+}
+
+.edit-tour h2{
+  color: var(--content-light);
+  text-transform: capitalize;
+}
+
+.edit-tour h2 span{
+  color: var(--yellow-color);
 }

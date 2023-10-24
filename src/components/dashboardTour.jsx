@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 import { BiPlusCircle } from "react-icons/bi";
 import { BsPencilFill } from "react-icons/bs";
@@ -7,6 +9,36 @@ import { FaTrash } from "react-icons/fa";
 import abtImg from "../assets/about-banner.jpg";
 
 function dashboardTour() {
+  const [tours, setTours] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://holiday-api-zj3a.onrender.com/api/v1/tour/all"
+        );
+        setTours(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    };
+
+    //async function to fetch data
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message} </div>;
+  }
+
   return (
     <section className="dashboard-main">
       <div className="dashboard-tour-sec">
@@ -38,22 +70,26 @@ function dashboardTour() {
                     </div>
                   </div>
                   <div className="dashboard-tour-table-content">
-                    <div className="row">
-                      <span className="destinationValue col-2">Italy</span>
-                      <span className="destinationValue col-3">
-                        7 days 8 hours
-                      </span>
-                      <span className="destinationValue col-3">50+ people</span>
-                      <span className="destinationValue col-2">$ 750</span>
-                      <span className="destinationValue col-2">
-                        <button className="table-action-btn">
-                          <BsPencilFill />
-                        </button>
-                        <button className="table-action-btn">
-                          <FaTrash />
-                        </button>
-                      </span>
-                    </div>
+                    {tours.map((tour) => (
+                      <div className="row">
+                        <span className="destinationValue col-2">{tour.title}</span>
+                        <span className="destinationValue col-3">
+                        {tour.Duration}
+                        </span>
+                        <span className="destinationValue col-3">
+                        {tour.Group_size}
+                        </span>
+                        <span className="destinationValue col-2">{tour.Price}</span>
+                        <span className="destinationValue col-2">
+                          <button className="table-action-btn">
+                            <BsPencilFill />
+                          </button>
+                          <button className="table-action-btn">
+                            <FaTrash />
+                          </button>
+                        </span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
