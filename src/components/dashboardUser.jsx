@@ -241,7 +241,7 @@ function dashboardUser() {
                                 />
                               </span>
                               <span className="edit-form-button">
-                                <button className="cancel-edit-btn btn">
+                                <button className="cancel-edit-btn btn" onClick={closeModal}>
                                   cancel
                                 </button>
                                 <button className="confirm-edit-btn btn">

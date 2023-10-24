@@ -1418,15 +1418,13 @@ ul {
 }
 
 .edit-tour {
-  top: 50%;
-  left: 50%;
-  position: fixed;
-  width: 600px;
+  margin: auto;
+  width: 650px;
   max-width: 100%;
+  border-radius: 10px;
   box-shadow: var(--box-shadow);
-  transform: translate(-50%, -50%);
   background: var(--background-light);
-  padding: 20px 5px;
+  padding: 30px 20px;
 }
 
 form.edit-tour-form .col-12{
@@ -1495,4 +1493,28 @@ span.input-box.no-arrow.col-6 {
   opacity: .2;
 }
 
+
+.edit-tour-btn{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-tour-btn button{
+  margin: 10px 5px 10px 5px;
+}
+.edit-tour-btn button:first-child{
+  margin-left: 0;
+}
+
+.edit-tour-btn button.cancel-btn{
+  background: var(--dark-color);
+}
+.edit-tour-btn button.cancel-btn:hover{
+  background: var(--yellow-color);
+}
+
+@media (max-width: 769px) {
+  .edit-tour .input-box.no-arrow .icon{display: none;}
+}
 
