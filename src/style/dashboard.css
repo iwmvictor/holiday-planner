@@ -1273,6 +1273,17 @@ ul {
   box-shadow: 0 0 6px var(--content-light);
 }
 
+.user-list .user-detail .row.col-12 .user-fullname span,
+.user-list .user-detail .row.col-12 .user-status span,
+.user-list .user-detail .row.col-12 .user-email span,
+.user-list .user-detail .row.col-12 .user-location span,
+.dashboard-tour-table-content .row span{
+  white-space: nowrap;
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  display: block;
+}
+
 .user-list .user-detail .row.col-12 .user-status span {
   color: var(--yellow-color);
   font-weight: lighter;
@@ -1410,11 +1421,18 @@ ul {
   top: 50%;
   left: 50%;
   position: fixed;
+  width: 600px;
   max-width: 100%;
   box-shadow: var(--box-shadow);
   transform: translate(-50%, -50%);
   background: var(--background-light);
-  padding: 20px;
+  padding: 20px 5px;
+}
+
+form.edit-tour-form .col-12{
+  display: flex;
+  width: 100%;
+  margin: 10px 0;
 }
 
 form.edit-user-form h3 {
@@ -1462,8 +1480,19 @@ form.edit-user-form span.edit-form-button button.cancel-edit-btn:hover {
 .edit-tour h2{
   color: var(--content-light);
   text-transform: capitalize;
+  padding: 10px 20px;
 }
 
 .edit-tour h2 span{
   color: var(--yellow-color);
 }
+
+span.input-box.no-arrow.col-6 {
+  padding: 0 3px;
+}
+
+.edit-tour input::placeholder{
+  opacity: .2;
+}
+
+

@@ -62,24 +62,34 @@ function dashboardTour() {
                 <div className="row">
                   <div className="dashboard-tour-table-header">
                     <div className="row">
+                      <span className="table-header col-3">
+                        destination image
+                      </span>
                       <span className="table-header col-2">destination</span>
-                      <span className="table-header col-3">duration</span>
-                      <span className="table-header col-3">group size</span>
-                      <span className="table-header col-2">price</span>
+                      <span className="table-header col-2">duration</span>
+                      <span className="table-header col-2">group size</span>
+                      <span className="table-header col-1">price</span>
                       <span className="table-header col-2">actions</span>
                     </div>
                   </div>
                   <div className="dashboard-tour-table-content">
                     {tours.map((tour) => (
                       <div className="row">
-                        <span className="destinationValue col-2">{tour.title}</span>
                         <span className="destinationValue col-3">
-                        {tour.Duration}
+                          <img src={tour.backdropImage} style={{height: '30px', width: '100%', objectFit: 'contain'}}/>
                         </span>
-                        <span className="destinationValue col-3">
-                        {tour.Group_size}
+                        <span className="destinationValue col-2">
+                          {tour.title}
                         </span>
-                        <span className="destinationValue col-2">{tour.Price}</span>
+                        <span className="destinationValue col-2">
+                          {tour.Duration}
+                        </span>
+                        <span className="destinationValue col-2">
+                          {tour.Group_size}
+                        </span>
+                        <span className="destinationValue col-1">
+                          {tour.Price}
+                        </span>
                         <span className="destinationValue col-2">
                           <button className="table-action-btn">
                             <BsPencilFill />

@@ -350,12 +350,12 @@ function dashboardUser() {
                               <div className="user-check-box input-box col-1">
                                 <input type="checkbox" className="form-input" />
                               </div>
-                              <div className="user-fullname col-3">
+                              <div className="user-fullname col-2">
                                 <span className="userName">
                                   {user.fullNames}
                                 </span>
                               </div>
-                              <div className="user-email col-2">
+                              <div className="user-email col-3">
                                 <span className="userEmail">{user.email}</span>
                               </div>
                               <div className="user-phone col-2">
