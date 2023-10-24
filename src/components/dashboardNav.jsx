@@ -25,17 +25,17 @@ function dashboardNav() {
                 </a>
               </div>
               <div className="dashboard-navlink">
-                <a href="tour">
+                <a href="/dashboard/tour">
                   <GiCommercialAirplane /> <span>tours</span> <FaAngleRight />
                 </a>
               </div>
               <div className="dashboard-navlink">
-                <a href="booking">
+                <a href="/dashboard/booking">
                   <FaCalendarCheck /> <span>bookings</span> <FaAngleRight />
                 </a>
               </div>
               <div className="dashboard-navlink">
-                <a href="user">
+                <a href="/dashboard/user">
                   <FaUsers /> <span>users</span> <FaAngleRight />
                 </a>
               </div>

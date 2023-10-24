@@ -1094,15 +1094,17 @@ ul {
 
 .dashboard-user-sec {
   width: 100%;
-  padding: 30px 10px;
+  padding: 30px 20px;
+}
+
+.dashboard-user-sec .container .row .dashboard-user-main{
+  margin: 0 -15px;
 }
 
 .dashboard-user-sec .container .row {
   display: flex;
   flex-direction: column;
   /* align-items: center; */
-  margin-left: 0;
-  margin-right: 0;
   justify-content: space-between;
 }
 
@@ -1132,9 +1134,20 @@ ul {
 
 .dashboard-user-main {
   background: var(--white-color);
+  margin: auto;
   width: 100%;
   border-radius: 10px;
-  padding: 5px;
+  display: flex;
+}
+
+.dashboard-user-main .user-container{
+  width: 100%;
+  padding: 0 10px;
+}
+
+.dashboard-user-main .user-container .user-main-header .row,
+.dashboard-user-main .user-container .user-main-content .row {
+  margin: 0;
 }
 
 .dashboard-user-main .user-container .row .user-main-header .row {
