@@ -1097,7 +1097,7 @@ ul {
   padding: 30px 20px;
 }
 
-.dashboard-user-sec .container .row .dashboard-user-main{
+.dashboard-user-sec .container .row .dashboard-user-main {
   margin: 0 -15px;
 }
 
@@ -1140,7 +1140,7 @@ ul {
   display: flex;
 }
 
-.dashboard-user-main .user-container{
+.dashboard-user-main .user-container {
   width: 100%;
   padding: 0 10px;
 }
@@ -1278,14 +1278,13 @@ ul {
   font-weight: lighter;
 }
 
-
 /*<<<<<<<<<<  DASHBOARD HOME PAGE <<<<<<<<<<*/
-.dashboard-home-header{
+.dashboard-home-header {
   width: 100%;
   padding-top: 30px;
 }
 
-.dashboard-home-container .row{
+.dashboard-home-container .row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1293,22 +1292,22 @@ ul {
   margin-right: 0;
 }
 
-.dashboard-home-container .row .hello-user h2{
+.dashboard-home-container .row .hello-user h2 {
   text-transform: capitalize;
   color: var(--content-light);
 }
 
-.dashboard-home-container .row .hello-user p{
+.dashboard-home-container .row .hello-user p {
   text-transform: capitalize;
   font-weight: lighter;
 }
 
-.dashboard-home-container .row .right-side{
+.dashboard-home-container .row .right-side {
   display: flex;
   margin-top: 0;
 }
 
-.dashboard-home-container .row .right-side .notification{
+.dashboard-home-container .row .right-side .notification {
   height: 50px;
   width: 50px;
   justify-content: center;
@@ -1321,18 +1320,23 @@ ul {
   transition: var(--transition);
 }
 
-.dashboard-home-container .row .right-side .notification:hover{
+.dashboard-home-container .row .right-side .notification:hover {
   box-shadow: 0 0 6px var(--yellow-color);
   border-color: var(--background-light);
   color: var(--white-color);
   background: var(--yellow-color);
 }
 
-.dashboard-home-container .row .right-side .add-tour-button a.add-tour-btn span {
+.dashboard-home-container
+  .row
+  .right-side
+  .add-tour-button
+  a.add-tour-btn
+  span {
   white-space: nowrap;
 }
 
-.dashboard-home-main .container .row{
+.dashboard-home-main .container .row {
   display: flex;
   flex-direction: column;
 }
@@ -1342,26 +1346,26 @@ ul {
   flex-direction: row;
 }
 
-.dashboard-main-sec .row .home-tour-box{
+.dashboard-main-sec .row .home-tour-box {
   padding: 20px 10px;
   background: var(--white-color);
   border-radius: 5px;
   box-shadow: 0 0 6px whitesmoke;
 }
 
-.home-tour-box h4{
+.home-tour-box h4 {
   padding: 5px;
   font-size: 21px;
   text-transform: uppercase;
   color: var(--content-light);
 }
 
-.home-tour-box ul li{
+.home-tour-box ul li {
   white-space: nowrap;
   padding: 3px 0;
 }
 
-.home-tour-box ul li a{
+.home-tour-box ul li a {
   display: flex;
   align-items: center;
   font-size: 18px;
@@ -1369,21 +1373,77 @@ ul {
   transition: var(--transition);
 }
 
-.home-tour-box ul li a:hover{
+.home-tour-box ul li a:hover {
   background: var(--background-light);
   color: var(--content-light);
   box-shadow: var(--box-shadow);
 }
 
-.home-tour-box ul li a span{
+.home-tour-box ul li a span {
   margin-left: 5px;
 }
 
-.home-tour-box a.box-more-btn{
+.home-tour-box a.box-more-btn {
   text-transform: capitalize;
   font-size: 18px;
   padding: 5px 10px;
   margin-top: 10px;
   color: var(--content-light);
   background: var(--background-light);
+}
+
+.edit-user {
+  top: 50%;
+  left: 50%;
+  margin: auto;
+  width: 420px;
+  position: fixed;
+  max-width: 100%;
+  border-radius: 10px;
+  padding: 25px 30px 50px 30px;
+  box-shadow: var(--box-shadow);
+  transform: translate(-50%, -50%);
+  background: var(--background-light);
+}
+
+form.edit-user-form h3 {
+  padding: 15px 0;
+  font-size: 24px;
+  text-shadow: 0 0 6px var(--white-color);
+  font-weight: bold;
+  color: var(--black-color);
+}
+
+form.edit-user-form h3 span {
+  color: var(--yellow-color);
+}
+
+form.edit-user-form span.input-box {
+  margin: 10px 0;
+}
+
+form.edit-user-form span.input-box input {
+  transition: var(--transition);
+}
+
+form.edit-user-form span.input-box input::placeholder{
+  text-transform: capitalize;
+  opacity: .2;
+  font-weight: lighter;
+  color: var(--yellow-color);
+}
+
+form.edit-user-form span.input-box input:focus {
+  color: var(--yellow-color);
+  font-size: 18px;
+}
+
+form.edit-user-form span.edit-form-button button.cancel-edit-btn{
+margin: 5px 10px 0 0;
+  color: var(--white-color);
+background: var(--dark-color);
+}
+
+form.edit-user-form span.edit-form-button button.cancel-edit-btn:hover{
+  background: var(--white-color);
 }

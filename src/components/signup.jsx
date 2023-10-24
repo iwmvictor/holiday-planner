@@ -175,25 +175,6 @@ function Signup() {
               </span>
             </div>
             <div className="col-12">
-              <label className="label-input">Role</label>
-              <span className="input-box no-arrow">
-                <span className="icon">
-                  <i>
-                    <FaUserAlt />
-                  </i>
-                </span>
-                <input
-                  type="text"
-                  placeholder="Role"
-                  className="form-input"
-                  name="role"
-                  value={formData.role}
-                  onChange={handleChange}
-                  required
-                />
-              </span>
-            </div>
-            <div className="col-12">
               <button className="signup-button btn" onClick={handleSubmit}>
                 Sign Up
               </button>

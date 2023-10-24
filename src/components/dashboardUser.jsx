@@ -9,12 +9,26 @@ import {
   FaFileExcel,
   FaPrint,
   FaTrash,
+  FaUserAlt,
+  FaEnvelope,
+  FaPhoneAlt,
+  FaUserShield,
 } from "react-icons/fa";
+import { IoLocation } from "react-icons/io5";
 
 function dashboardUser() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   useEffect(() => {
     // Fetch the list of registered users from the API
@@ -29,6 +43,23 @@ function dashboardUser() {
         setLoading(false);
       });
   }, []);
+
+  const handleDeleteUser = (userId) => {
+    // Send a DELETE request to the API to delete the user
+    axios
+      .delete(
+        `https://holiday-api-zj3a.onrender.com/api/v1/auth/users/delete/{email}`
+      )
+      .then(() => {
+        // Filter out the deleted user from the list of users
+        setUsers((prevUsers) =>
+          prevUsers.filter((user) => user.email !== email)
+        );
+      })
+      .catch((err) => {
+        console.error("Error deleting user:", err);
+      });
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -91,6 +122,90 @@ function dashboardUser() {
                       </div>
                     </div>
                   </div>
+
+                  {isModalOpen && (
+                    <div className="model-overlay">
+                      <div
+                        className="modal"
+                        style={{
+                          position: "fixed",
+                          width: "100%",
+                          top: "0",
+                          left: "0",
+                          background: '#2b2b2b80',
+                        }}
+                      >
+                        <div className="edit-user">
+                          <div className="dashboard-edit-user">
+                            <form className="edit-user-form">
+                              <h3>
+                                Edit @<span className="username">iwm</span>
+                              </h3>
+                              <span className="input-box no-arrow">
+                                <span className="icon">
+                                  <FaUserAlt />
+                                </span>
+                                <input
+                                  type="text"
+                                  placeholder="fullname"
+                                  className="form-input"
+                                />
+                              </span>
+                              <span className="input-box no-arrow">
+                                <span className="icon">
+                                  <FaEnvelope />
+                                </span>
+                                <input
+                                  type="email"
+                                  placeholder=" email address"
+                                  className="form-input"
+                                />
+                              </span>
+                              <span className="input-box no-arrow">
+                                <span className="icon">
+                                  <FaPhoneAlt />
+                                </span>
+                                <input
+                                  type="number"
+                                  placeholder=" phone number"
+                                  className="form-input"
+                                />
+                              </span>
+                              <span className="input-box no-arrow">
+                                <span className="icon">
+                                  <IoLocation />
+                                </span>
+                                <input
+                                  type="text"
+                                  placeholder=" location"
+                                  className="form-input"
+                                />
+                              </span>
+                              <span className="input-box no-arrow">
+                                <span className="icon">
+                                  <FaUserShield />
+                                </span>
+                                <input
+                                  type="text"
+                                  placeholder="Role[status]"
+                                  className="form-input"
+                                />
+                              </span>
+                              <span className="edit-form-button">
+                                <button className="cancel-edit-btn btn">
+                                  cancel
+                                </button>
+                                <button className="confirm-edit-btn btn">
+                                  confirm
+                                </button>
+                              </span>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="user-main-content">
                     <div className="row">
                       <div className="user-list-header">
@@ -178,7 +293,7 @@ function dashboardUser() {
                               </button>
                             </div>
                           </div>
-                        </div> */}
+                        </div>  */}
 
                         {users.map((user) => (
                           <div className="user-detail" key={user._id}>
@@ -188,14 +303,16 @@ function dashboardUser() {
                               </div>
                               <div className="user-fullname col-3">
                                 <span className="userName">
-                                  {user.fullname}
+                                  {user.fullNames}
                                 </span>
                               </div>
                               <div className="user-email col-2">
                                 <span className="userEmail">{user.email}</span>
                               </div>
                               <div className="user-phone col-2">
-                                <span className="userPhone">{user.phone}</span>
+                                <span className="userPhone">
+                                  {user.phoneNumber}
+                                </span>
                               </div>
                               <div className="user-location col-1">
                                 <span className="userLocation">
@@ -206,10 +323,17 @@ function dashboardUser() {
                                 <span className="userStatus">{user.role}</span>
                               </div>
                               <div className="user-action col-2">
-                                <button className="table-action-btn">
+                                <button
+                                  className="table-action-btn"
+                                  onClick={openModal}
+                                >
                                   <BsPencilFill />
                                 </button>
-                                <button className="table-action-btn">
+
+                                <button
+                                  className="table-action-btn"
+                                  onClick={() => handleDeleteUser(user.email)}
+                                >
                                   <FaTrash />
                                 </button>
                               </div>
