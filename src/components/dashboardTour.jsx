@@ -386,29 +386,6 @@ function dashboardTour() {
                       </div>
 
                       <div className="col-12">
-                        <span className="input-box no-arrow col-6">
-                          <span className="icon">
-                            <MdOutlinePriceChange />
-                          </span>
-                          <input
-                            type="text"
-                            placeholder="Price Included"
-                            className="form-input"
-                          />
-                        </span>
-
-                        <span className="input-box no-arrow col-6">
-                          <span className="icon">
-                            <ImPriceTag />
-                          </span>
-                          <input
-                            type="text"
-                            placeholder="Price Not Included"
-                            className="form-input"
-                          />
-                        </span>
-                      </div>
-                      <div className="col-12">
                         <div className=" edit-tour-btn">
                           <button className="btn confirm-btn">confirm</button>
                           <button

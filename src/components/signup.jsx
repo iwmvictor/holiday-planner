@@ -3,6 +3,8 @@ import { FaUserAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Notiflix from 'notiflix';
+
 
 import signupImg from "../assets/highlight-video.mp4";
 import highlightVid from "../assets/highlight-video.mp4";

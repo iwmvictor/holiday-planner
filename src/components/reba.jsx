@@ -48,7 +48,7 @@ function dashboardUser() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     // Create a data object from the form fields
     const userData = {
       fullNames: fullName,
@@ -57,29 +57,33 @@ function dashboardUser() {
       location,
       role,
     };
-
-    // Make a POST request to add the new user
-    axios
-      .post(
-        "https://holiday-api-zj3a.onrender.com/api/v1/auth/signup",
-        userData
-      )
-      .then((response) => {
-        if (response.status === 201) {
-          alert("User added successfully.");
-          // Optionally, you can update the user list here
-          // Refresh the user list, or add the new user to the existing list
-          // setUsers([...users, userData]);
-          closeAddUserModal(); // Close the modal after adding the user
-        } else {
+  
+    // Check if the user with the same email exists before creating
+    const existingUser = users.find((user) => user.email === email);
+    if (existingUser) {
+      alert("User with this email already exists.");
+    } else {
+      // Make a POST request to add the new user
+      axios
+        .post("https://holiday-api-zj3a.onrender.com/api/v1/auth/signup", userData)
+        .then((response) => {
+          if (response.status === 201) {
+            alert("User added successfully.");
+            // Optionally, you can update the user list here
+            // Refresh the user list, or add the new user to the existing list
+            // setUsers([...users, userData]);
+            closeAddUserModal(); // Close the modal after adding the user
+          } else {
+            alert("Failed to add the user. Please try again.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error adding user:", error);
           alert("Failed to add the user. Please try again.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error adding user:", error);
-        alert("Failed to add the user. Please try again.");
-      });
+        });
+    }
   };
+  
 
   const openModal = (user) => {
     // console.log("User date for edit: ", user);
