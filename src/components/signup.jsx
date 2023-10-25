@@ -33,6 +33,9 @@ function Signup() {
       ...formData,
       [name]: value,
     });
+    if (name === "email" && value.includes("@")) {
+      Notiflix.Notify.info("You've entered email address'.");
+    }
   };
 
   const handleSubmit = (e) => {
@@ -44,7 +47,7 @@ function Signup() {
       !formData.phone ||
       !formData.password
     ) {
-      alert("Please fill out all fields.");
+      Notiflix.Notify.warning("Please fill out all fields.");
       return;
     }
 
@@ -55,17 +58,17 @@ function Signup() {
       )
       .then((response) => {
         if (response.status === 201) {
-          alert("Account created successfully. You can now log in.");
+          Notiflix.Notify.success("Account created successfully. You can now log in.");
           // Set the user role in a cookie
           Cookies.set("userRole", formData.role);
           navigate("/login");
         } else {
-          alert("Account creation failed. Please try again.");
+          Notiflix.Notify.failure("Account creation failed. Please try again.");
         }
       })
       .catch((error) => {
         console.error("Error creating user:", error);
-        alert("Account creation failed. Please try again.");
+        Notiflix.Notify.failure("Account creation failed. Please try again.");
       });
   };
 

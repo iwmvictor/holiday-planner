@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Notiflix from "notiflix";
+
 import {
   FaUserAlt,
   FaLock,
@@ -43,22 +45,22 @@ function Login() {
     }
 
     axios
-      .post(
-        "https://holiday-api-zj3a.onrender.com/api/v1/auth/login",
-        formData
-      )
+      .post("https://holiday-api-zj3a.onrender.com/api/v1/auth/login", formData)
       .then((response) => {
         if (response.status === 200) {
           // Retrieve the user role from the cookie
           const userRole = Cookies.get("userRole");
+          Notiflix.Notify.success("LOGIN SUCCESSFULLY");
           navigate("/dashboard");
         } else {
-          alert("Invalid email or password. Please try again.");
+          Notiflix.Notify.failure(
+            "Invalid email or password. Please try again."
+          );
         }
       })
       .catch((error) => {
         console.error("Login failed:", error);
-        alert("Invalid email or password. Please try again.");
+        Notiflix.Notify.failure("Invalid email or password. Please try again.");
       });
   };
 

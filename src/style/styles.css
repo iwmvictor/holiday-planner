@@ -2007,37 +2007,36 @@ footer.footer {
   .destination-box.big-height .destination-box-image {
     height: 400px;
   }
-  .main-destination.common-sec .container .row.dest-img-sec{
+  .main-destination.common-sec .container .row.dest-img-sec {
     flex-direction: column;
     width: 100%;
   }
   .main-destination.common-sec .container .row.dest-img-sec .col-8,
-  .main-destination.common-sec .container .row.dest-img-sec .col-4{
+  .main-destination.common-sec .container .row.dest-img-sec .col-4 {
     max-width: 100%;
   }
-  .main-highlight{
+  .main-highlight {
     padding-top: 120px;
     padding-bottom: 120px;
   }
-  .h2-title{
+  .h2-title {
     font-size: 35px;
     line-height: 45px;
   }
-  .h3-title{
+  .h3-title {
     font-size: 25px;
     line-height: 35px;
   }
-  .main-highlight::after{
+  .main-highlight::after {
     top: 45px;
     left: 20px;
     right: 20px;
     bottom: 45px;
   }
-
 }
 
 @media (min-width: 1199px) {
-  .main-highlight::after{
+  .main-highlight::after {
     top: 31px;
     left: 31px;
     right: 31px;
@@ -2095,13 +2094,13 @@ footer.footer {
 }
 
 @media (max-width: 470px) {
-  .site-branding img{
+  .site-branding img {
     width: 180px;
   }
 }
 
 @media (max-width: 576px) {
-  .container{
+  .container {
     max-width: 540px;
     margin: auto;
   }
@@ -2394,52 +2393,9 @@ footer.footer {
   color: var(--dark-color);
 }
 
-/* Create a keyframe animation for the bubbles */
-@keyframes moveBubbles {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-100px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
 /* Apply the animation to the bubbles */
 .signup-container {
   position: relative;
-}
-
-/* Create the bubble elements */
-.bubble {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: #3498db; /* Bubble color */
-  border-radius: 50%;
-  animation: moveBubbles 4s infinite; /* Use the defined animation */
-  opacity: 0.7;
-}
-
-/* Define individual bubbles with unique positions and sizes */
-.bubble1 {
-  left: 10%;
-  top: 10%;
-  animation-delay: 0s;
-}
-
-.bubble2 {
-  left: 20%;
-  top: 30%;
-  animation-delay: 1s;
-}
-
-.bubble3 {
-  left: 50%;
-  top: 20%;
-  animation-delay: 2s;
 }
 
 .container .signup-side-content .highlight-bg-video video:hover {
@@ -2494,6 +2450,15 @@ footer.footer {
   background: var(--white-color);
 }
 
+@media (max-width: 870px) {
+  .signup-container .row .right-side {
+    max-width: 40%;
+  }
+  .signup-container .row .left-side {
+    max-width: 60%;
+  }
+}
+
 @media (max-width: 768px) {
   .signup-container {
     max-width: 100%;
@@ -2502,5 +2467,8 @@ footer.footer {
 
   .form-input {
     padding: 10px;
+  }
+  .signup-container .row .right-side {
+    display: none;
   }
 }

@@ -17,6 +17,7 @@ import {
 import { IoLocation } from "react-icons/io5";
 
 import loaderImg from "../assets/ajax-loader.gif";
+import Notiflix from "notiflix";
 
 function dashboardUser() {
   const [users, setUsers] = useState([]);
@@ -27,20 +28,23 @@ function dashboardUser() {
   const [addUserModal, setAddUserModal] = useState(false);
 
   const openModal = (user) => {
-    // console.log("User date for edit: ", user);
+    Notiflix.Notify.info('Edit user form')
     setModalOpen(true);
     setUserForEdit(user); //pre-fill user data in input fields
   };
 
   const closeModal = () => {
+    Notiflix.Notify.info('Edit user canceled')
     setModalOpen(false);
   };
 
   const openAddUserModal = () => {
+    Notiflix.Notify.info('Add new user')
     setAddUserModal(true);
   };
 
   const closeAddUserModal = () => {
+    Notiflix.Notify.info("Add user form closed")
     setAddUserModal(false);
   };
 
