@@ -16,12 +16,15 @@ import {
 } from "react-icons/fa";
 import { IoLocation } from "react-icons/io5";
 
+import loaderImg from "../assets/ajax-loader.gif";
+
 function dashboardUser() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [userForEdit, setUserForEdit] = useState(null);
+  const [addUserModal, setAddUserModal] = useState(false);
 
   const openModal = (user) => {
     // console.log("User date for edit: ", user);
@@ -31,6 +34,14 @@ function dashboardUser() {
 
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const openAddUserModal = () => {
+    setAddUserModal(true);
+  };
+
+  const closeAddUserModal = () => {
+    setAddUserModal(false);
   };
 
   useEffect(() => {
@@ -65,7 +76,16 @@ function dashboardUser() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div class="loader-wrapper">
+        <div class="loader">
+          <div class="loader-text">
+            Hold on while <img src={loaderImg} style={{ margin: "0 5px" }} />{" "}
+            loading your data ...
+          </div>{" "}
+        </div>
+      </div>
+    );
   }
 
   if (error) {
@@ -84,7 +104,7 @@ function dashboardUser() {
                   <p className="section-subtitle">manage the system users</p>
                 </div>
                 <div className="dashboard-button">
-                  <a className="btn add-user">
+                  <a className="btn add-user" onClick={openAddUserModal}>
                     <BiPlusCircle style={{ fontSize: "21px" }} />{" "}
                     <span>add user</span>
                   </a>
@@ -187,7 +207,7 @@ function dashboardUser() {
                                   <FaPhoneAlt />
                                 </span>
                                 <input
-                                  type="number"
+                                  type="text"
                                   placeholder=" phone number"
                                   className="form-input"
                                   value={
@@ -241,7 +261,131 @@ function dashboardUser() {
                                 />
                               </span>
                               <span className="edit-form-button">
-                                <button className="cancel-edit-btn btn" onClick={closeModal}>
+                                <button
+                                  className="cancel-edit-btn btn"
+                                  onClick={closeModal}
+                                >
+                                  cancel
+                                </button>
+                                <button className="confirm-edit-btn btn">
+                                  confirm
+                                </button>
+                              </span>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {addUserModal && (
+                    <div className="model-overlay">
+                      <div
+                        className="modal"
+                        style={{
+                          position: "fixed",
+                          width: "100%",
+                          top: "0",
+                          left: "0",
+                          background: "#2b2b2b80",
+                        }}
+                      >
+                        <div className="edit-user">
+                          <div className="dashboard-edit-user">
+                            <form className="edit-user-form">
+                              <h3 style={{ textTransform: "uppercase" }}>
+                                register new user
+                              </h3>
+                              <span className="input-box no-arrow">
+                                <span className="icon">
+                                  <FaUserAlt />
+                                </span>
+                                <input
+                                  type="text"
+                                  placeholder="fullname"
+                                  className="form-input"
+                                  onChange={(e) => {
+                                    // Update the userForEdit state when the input changes
+                                    setUserForEdit({
+                                      ...userForEdit,
+                                      fullNames: e.target.value,
+                                    });
+                                  }}
+                                />
+                              </span>
+                              <span className="input-box no-arrow">
+                                <span className="icon">
+                                  <FaEnvelope />
+                                </span>
+                                <input
+                                  type="email"
+                                  placeholder=" email address"
+                                  className="form-input"
+                                  onChange={(e) => {
+                                    // Update the userForEdit state when the input changes
+                                    setUserForEdit({
+                                      ...userForEdit,
+                                      email: e.target.value,
+                                    });
+                                  }}
+                                />
+                              </span>
+                              <span className="input-box no-arrow">
+                                <span className="icon">
+                                  <FaPhoneAlt />
+                                </span>
+                                <input
+                                  type="text"
+                                  placeholder=" phone number"
+                                  className="form-input"
+                                  onChange={(e) => {
+                                    // Update the userForEdit state when the input changes
+                                    setUserForEdit({
+                                      ...userForEdit,
+                                      phoneNumber: e.target.value,
+                                    });
+                                  }}
+                                />
+                              </span>
+                              <span className="input-box no-arrow">
+                                <span className="icon">
+                                  <IoLocation />
+                                </span>
+                                <input
+                                  type="text"
+                                  placeholder=" location"
+                                  className="form-input"
+                                  onChange={(e) => {
+                                    // Update the userForEdit state when the input changes
+                                    setUserForEdit({
+                                      ...userForEdit,
+                                      location: e.target.value,
+                                    });
+                                  }}
+                                />
+                              </span>
+                              <span className="input-box no-arrow">
+                                <span className="icon">
+                                  <FaUserShield />
+                                </span>
+                                <input
+                                  type="text"
+                                  placeholder="Role[status]"
+                                  className="form-input"
+                                  onChange={(e) => {
+                                    // Update the userForEdit state when the input changes
+                                    setUserForEdit({
+                                      ...userForEdit,
+                                      role: e.target.value,
+                                    });
+                                  }}
+                                />
+                              </span>
+                              <span className="edit-form-button">
+                                <button
+                                  className="cancel-edit-btn btn"
+                                  onClick={closeAddUserModal}
+                                >
                                   cancel
                                 </button>
                                 <button className="confirm-edit-btn btn">

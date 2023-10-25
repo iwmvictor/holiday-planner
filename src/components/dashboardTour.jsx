@@ -22,13 +22,34 @@ import {
 import { TbDiscountCheckFilled } from "react-icons/tb";
 
 import abtImg from "../assets/about-banner.jpg";
+import loaderImg from "../assets/ajax-loader.gif";
 
 function dashboardTour() {
+  const [formData, setFormData] = useState({
+    destination: "",
+    backdropImage: null,
+    title: "",
+    Description: "",
+    Duration: "",
+    Group_size: "",
+    Price: "",
+    Discount: "",
+    Tour_type: "",
+    Departure: "",
+    Seats: "",
+    fromMonth: "",
+    toMonth: "",
+    departureTime: "",
+    ReturnTime: "",
+    Gallery: null,
+  });
+
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userForEdit, setUserForEdit] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [addTourModel, setAddTourModel] = useState(false);
 
   const openModal = () => {
     setModalOpen(true);
@@ -36,6 +57,14 @@ function dashboardTour() {
 
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const openTourModal = () => {
+    setAddTourModel(true);
+  };
+
+  const closeTourModel = () => {
+    setAddTourModel(false);
   };
 
   useEffect(() => {
@@ -52,12 +81,66 @@ function dashboardTour() {
       }
     };
 
-    //async function to fetch data
+    // async function to fetch data
     fetchData();
   }, []);
 
+  // Handle form input changes and update the formData state
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    setFormData({ ...formData, [name]: files[0] });
+  };
+
+  const handleAddTour = async (event) => {
+    event.preventDefault();
+
+    // Check for empty fields
+    for (const key in formData) {
+      if (formData[key] === "" || formData[key] === null) {
+        alert(`Please fill in the ${key} field.`);
+        return; // Exit the function if any field is empty
+      }
+    }
+
+    // Create the data object to send to the API
+    const data = new FormData();
+    for (const key in formData) {
+      data.append(key, formData[key]);
+    }
+
+    try {
+      // Send a POST request to your API
+      await axios.post(
+        "https://holiday-api-zj3a.onrender.com/api/v1/tour/addNew",
+        data
+      );
+
+      // Close the modal after successfully creating the tour
+      closeTourModel();
+
+      // You may also want to refresh the tour data to show the newly created tour.
+    } catch (error) {
+      console.error("Error creating tour:", error);
+      // Handle the error as needed (e.g., display an error message).
+    }
+  };
+
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div class="loader-wrapper">
+        <div class="loader">
+          <div class="loader-text">
+            Hold on while <img src={loaderImg} style={{ margin: "0 5px" }} />{" "}
+            loading your data ...
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
@@ -75,7 +158,7 @@ function dashboardTour() {
                   <h2>tours</h2>
                 </div>
                 <div className="dashboard-tour-button">
-                  <a className="btn add-tour-btn">
+                  <a className="btn add-tour-btn" onClick={openTourModal}>
                     <BiPlusCircle style={{ fontSize: "21px" }} />{" "}
                     <span>add tour</span>
                   </a>
@@ -342,6 +425,367 @@ function dashboardTour() {
               </div>
             )}
 
+            {addTourModel && (
+              <div className="model-overlay">
+                <div
+                  className="modal"
+                  style={{
+                    position: "fixed",
+                    width: "100%",
+                    top: "0",
+                    left: "0",
+                    background: "#2b2b2b80",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    overflow: "auto",
+                  }}
+                >
+                  <div className="edit-tour">
+                    <h2>create tour</h2>
+                    <form
+                      className="edit-tour-form"
+                      style={{ maxHeight: "180vh" }}
+                      onSubmit={handleAddTour}
+                    >
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <BiCurrentLocation />
+                          </span>
+                          <input
+                            type="text"
+                            name="destination"
+                            placeholder="Destination"
+                            className="form-input"
+                            value={formData.destination}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                destination: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <FaUpload />
+                          </span>
+                          <input
+                            type="file"
+                            name="backdropImage"
+                            placeholder="Upload Image"
+                            className="form-input"
+                            accept="image/*"
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                backdropImage: e.target.files[0],
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdTitle />
+                          </span>
+                          <input
+                            type="text"
+                            name="title"
+                            placeholder="Title"
+                            className="form-input"
+                            value={formData.title}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                title: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdOutlineDescription />
+                          </span>
+                          <input
+                            type="text"
+                            name="description"
+                            placeholder="Description"
+                            className="form-input"
+                            value={formData.Description}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Description: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <GiTimeBomb />
+                          </span>
+                          <input
+                            type="text"
+                            name="duration"
+                            placeholder="Duration"
+                            className="form-input"
+                            value={formData.Duration}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Duration: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdGroups />
+                          </span>
+                          <input
+                            type="text"
+                            name="Group_size"
+                            placeholder="Group Size"
+                            className="form-input"
+                            value={formData.Group_size}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Group_size: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdPriceChange />
+                          </span>
+                          <input
+                            type="text"
+                            name="Price"
+                            placeholder="Price[$]"
+                            className="form-input"
+                            value={formData.Price}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Price: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <TbDiscountCheckFilled />
+                          </span>
+                          <input
+                            type="text"
+                            name="Discount"
+                            placeholder="Discount: Percentage"
+                            className="form-input"
+                            value={formData.Discount}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Discount: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdTour />
+                          </span>
+                          <input
+                            type="text"
+                            name="tourType"
+                            placeholder="Tour Type"
+                            className="form-input"
+                            value={formData.Tour_type}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Tour_type: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdDepartureBoard />
+                          </span>
+                          <input
+                            type="text"
+                            name="departure"
+                            placeholder="Departure"
+                            className="form-input"
+                            value={formData.Departure}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Departure: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdAirlineSeatReclineExtra />
+                          </span>
+                          <input
+                            type="text"
+                            name="seats"
+                            placeholder="Seats"
+                            className="form-input"
+                            value={formData.Seats}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Seats: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <FaCalendarAlt />
+                          </span>
+                          <input
+                            type="text"
+                            name="fromMonth"
+                            placeholder="From Month"
+                            className="form-input"
+                            value={formData.fromMonth}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                fromMonth: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <FaCalendarAlt />
+                          </span>
+                          <input
+                            type="text"
+                            name="toMonth"
+                            placeholder="To Month"
+                            className="form-input"
+                            value={formData.toMonth}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                toMonth: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdOutlineDepartureBoard />
+                          </span>
+                          <input
+                            type="text"
+                            name="departureTime"
+                            placeholder="Departure Time"
+                            className="form-input"
+                            value={formData.departureTime}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                departureTime: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <GiBackwardTime />
+                          </span>
+                          <input
+                            type="text"
+                            name="returnTime"
+                            placeholder="Return Time"
+                            className="form-input"
+                            value={formData.ReturnTime}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                ReturnTime: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <FcGallery />
+                          </span>
+                          <input
+                            type="file"
+                            name="gallery"
+                            placeholder="Gallery"
+                            className="form-input"
+                            accept="image/*"
+                            multiple // Allow multiple images
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Gallery: e.target.files[0],
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <div className="edit-tour-btn">
+                          <button type="submit" className="btn confirm-btn">
+                            confirm
+                          </button>
+                          <button
+                            className="btn cancel-btn"
+                            onClick={closeTourModel}
+                          >
+                            cancel
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="dashboard-tour-main">
               <div className="dashboard-container container">
                 <div className="row">
@@ -377,10 +821,10 @@ function dashboardTour() {
                           {tour.Duration}
                         </span>
                         <span className="destinationValue col-2">
-                          {tour.Group_size} people
+                          {tour.Group_size}
                         </span>
                         <span className="destinationValue col-1">
-                          ${tour.Price}
+                          {tour.Price}
                         </span>
                         <span className="destinationValue col-2">
                           <button

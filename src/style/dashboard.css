@@ -1277,9 +1277,9 @@ ul {
 .user-list .user-detail .row.col-12 .user-status span,
 .user-list .user-detail .row.col-12 .user-email span,
 .user-list .user-detail .row.col-12 .user-location span,
-.dashboard-tour-table-content .row span{
+.dashboard-tour-table-content .row span {
   white-space: nowrap;
-  overflow: hidden; 
+  overflow: hidden;
   text-overflow: ellipsis;
   display: block;
 }
@@ -1427,7 +1427,7 @@ ul {
   padding: 30px 20px;
 }
 
-form.edit-tour-form .col-12{
+form.edit-tour-form .col-12 {
   display: flex;
   width: 100%;
   margin: 10px 0;
@@ -1475,13 +1475,13 @@ form.edit-user-form span.edit-form-button button.cancel-edit-btn:hover {
   background: var(--white-color);
 }
 
-.edit-tour h2{
+.edit-tour h2 {
   color: var(--content-light);
   text-transform: capitalize;
   padding: 10px 20px;
 }
 
-.edit-tour h2 span{
+.edit-tour h2 span {
   color: var(--yellow-color);
 }
 
@@ -1489,32 +1489,85 @@ span.input-box.no-arrow.col-6 {
   padding: 0 3px;
 }
 
-.edit-tour input::placeholder{
-  opacity: .2;
+.edit-tour input::placeholder {
+  opacity: 0.2;
 }
 
-
-.edit-tour-btn{
+.edit-tour-btn {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.edit-tour-btn button{
+.edit-tour-btn button {
   margin: 10px 5px 10px 5px;
 }
-.edit-tour-btn button:first-child{
+.edit-tour-btn button:first-child {
   margin-left: 0;
 }
 
-.edit-tour-btn button.cancel-btn{
+.edit-tour-btn button.cancel-btn {
   background: var(--dark-color);
 }
-.edit-tour-btn button.cancel-btn:hover{
+.edit-tour-btn button.cancel-btn:hover {
   background: var(--yellow-color);
 }
 
 @media (max-width: 769px) {
-  .edit-tour .input-box.no-arrow .icon{display: none;}
+  .edit-tour .input-box.no-arrow .icon {
+    display: none;
+  }
 }
 
+.loader-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(14, 1, 29, 0.2);
+  z-index: 999;
+}
+
+.loader {
+  text-align: center;
+}
+
+.navlog a{
+  padding: 10px;
+  display: flex;
+  font-size: 18px;
+  align-items: center;
+  border-radius: 3px;
+  background: var(--background-light);
+  box-shadow: 0 0 6px #bbb;
+}
+
+.navlog a span{
+  margin-left: 5px;
+}
+
+.loader-text {
+  display: flex;
+  align-items: center;
+  font-size: 21px;
+  margin-top: 20px;
+  font-weight: bolder;
+  text-transform: uppercase;
+  animation: blink 2s infinite alternate;
+}
+
+@keyframes blink {
+  0% {
+    color: var(--yellow-color);
+  }
+  50% {
+    color: var(--primary-light);
+  }
+  100% {
+    color: var(--content-light);
+  }
+}

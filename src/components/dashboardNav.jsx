@@ -6,6 +6,7 @@ import { FaAngleRight, FaCalendarCheck, FaUsers, } from 'react-icons/fa'
 import { GiCommercialAirplane } from 'react-icons/gi'
 
 import logoImg from "../assets/logo.png";
+import { BiLogOut } from 'react-icons/bi';
 
 function dashboardNav() {
   return (
@@ -39,6 +40,11 @@ function dashboardNav() {
                   <FaUsers /> <span>users</span> <FaAngleRight />
                 </a>
               </div>
+            </div>
+            <div className="navlog">
+              <a href="/login">
+                <BiLogOut/> <span>Logout</span>
+              </a>
             </div>
           </div>
         </div>
