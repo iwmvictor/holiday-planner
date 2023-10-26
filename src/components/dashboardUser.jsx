@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import { BiPlusCircle, BiFilter } from "react-icons/bi";
-import { BsPencilFill } from "react-icons/bs";
+import { AiTwotoneEdit } from "react-icons/ai";
 import {
   FaSearch,
   FaFilePdf,
@@ -28,23 +28,23 @@ function dashboardUser() {
   const [addUserModal, setAddUserModal] = useState(false);
 
   const openModal = (user) => {
-    Notiflix.Notify.info('Edit user form')
+    Notiflix.Notify.info("Edit user form");
     setModalOpen(true);
     setUserForEdit(user); //pre-fill user data in input fields
   };
 
   const closeModal = () => {
-    Notiflix.Notify.info('Edit user canceled')
+    Notiflix.Notify.info("Edit user canceled");
     setModalOpen(false);
   };
 
   const openAddUserModal = () => {
-    Notiflix.Notify.info('Add new user')
+    Notiflix.Notify.info("Add new user");
     setAddUserModal(true);
   };
 
   const closeAddUserModal = () => {
-    Notiflix.Notify.info("Add user form closed")
+    Notiflix.Notify.info("Add user form closed");
     setAddUserModal(false);
   };
 
@@ -84,8 +84,7 @@ function dashboardUser() {
       <div class="loader-wrapper">
         <div class="loader">
           <div class="loader-text">
-            Hold on while <img src={loaderImg} style={{ margin: "0 5px" }} />{" "}
-            loading your data ...
+            <img src={loaderImg} style={{ margin: "0 5px", opacity: '.6' }} />{" "}
           </div>{" "}
         </div>
       </div>
@@ -524,7 +523,7 @@ function dashboardUser() {
                                   className="table-action-btn"
                                   onClick={() => openModal(user)}
                                 >
-                                  <BsPencilFill />
+                                  <AiTwotoneEdit />
                                 </button>
 
                                 <button

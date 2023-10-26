@@ -19,7 +19,7 @@ import tourBoxImg1 from "../assets/tour-box-image1.jpg";
 import tourBoxImg2 from "../assets/tour-box-image2.jpg";
 import tourBoxImg3 from "../assets/tour-box-image4.jpg";
 import gaqBg from "../assets/get-a-questions-back.jpg";
-import loaderImg from '../assets/ajax-loader.gif'
+import loaderImg from "../assets/ajax-loader.gif";
 
 function tour() {
   const backgroundStyle = {
@@ -77,8 +77,7 @@ function tour() {
       <div class="loader-wrapper">
         <div class="loader">
           <div class="loader-text">
-            Hold on while <img src={loaderImg} style={{ margin: "0 5px" }} />{" "}
-            loading your data ...
+            |<img src={loaderImg} style={{ margin: "0 5px", opacity: '.6' }} />{" "}
           </div>{" "}
         </div>
       </div>

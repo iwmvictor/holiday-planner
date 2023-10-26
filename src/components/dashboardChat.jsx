@@ -54,7 +54,7 @@ function DashboardChat() {
   };
 
   return (
-    <main className="admin-chat" style={{ marginLeft: "230px" }}>
+    <main className="admin-chat" style={{ marginLeft: "250px" }}>
       <div className="chat-app">
         <div className="chat-container">
           <div className="chat-header">

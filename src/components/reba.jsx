@@ -1,222 +1,877 @@
-import React, { useState } from "react";
-import { FaUserAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
 import Notiflix from "notiflix";
 
-import signupImg from "../assets/highlight-video.mp4";
-import highlightVid from "../assets/highlight-video.mp4";
+import { BiPlusCircle, BiCurrentLocation } from "react-icons/bi";
+import { BsPencilFill } from "react-icons/bs";
+import { FaTrash, FaCalendarAlt, FaUpload } from "react-icons/fa";
+import { FcGallery } from "react-icons/fc";
+import { GiTimeBomb, GiBackwardTime } from "react-icons/gi";
+import { AiTwotoneEdit } from "react-icons/ai";
+import {
+  MdTitle,
+  MdOutlineDescription,
+  MdGroups,
+  MdPriceChange,
+  MdTour,
+  MdDepartureBoard,
+  MdAirlineSeatReclineExtra,
+  MdOutlineDepartureBoard,
+  MdOutlinePriceChange,
+} from "react-icons/md";
+import { TbDiscountCheckFilled } from "react-icons/tb";
 
-function Signup() {
-  const signupBgStyle = {
-    backgroundImage: `url(${signupImg})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center center",
-  };
+import abtImg from "../assets/about-banner.jpg";
+import loaderImg from "../assets/ajax-loader.gif";
 
-  const navigate = useNavigate();
-
+function dashboardTour() {
   const [formData, setFormData] = useState({
-    fullname: "",
-    email: "",
-    phone: "",
-    password: "",
-    location: "",
-    role: "",
+    destination: "",
+    backdropImage: null,
+    title: "",
+    Description: "",
+    Duration: "",
+    Group_size: "",
+    Price: "",
+    Discount: "",
+    Tour_type: "",
+    Departure: "",
+    Seats: "",
+    fromMonth: "",
+    toMonth: "",
+    departureTime: "",
+    ReturnTime: "",
+    Gallery: null,
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const [tours, setTours] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [userForEdit, setUserForEdit] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [addTourModel, setAddTourModel] = useState(false);
 
-    // Example: Notify user when they enter an email
-    if (name === "email" && value.includes("@")) {
-      Notiflix.Notify.info("You entered an email address.");
-    }
+  const openModal = () => {
+    setModalOpen(true);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
-    if (
-      !formData.fullname ||
-      !formData.email ||
-      !formData.phone ||
-      !formData.password
-    ) {
-      Notiflix.Notify.failure("Please fill out all fields.");
-      return;
-    }
+  const openTourModal = () => {
+    setAddTourModel(true);
+  };
 
-    axios
-      .post(
-        "https://holiday-api-zj3a.onrender.com/api/v1/auth/signup",
-        formData
-      )
-      .then((response) => {
-        if (response.status === 201) {
-          Notiflix.Notify.success(
-            "Account created successfully. You can now log in."
+  const closeTourModel = () => {
+    setAddTourModel(false);
+  };
+
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [tourToDelete, setTourToDelete] = useState(null);
+  const handleConfirmDelete = async (tour) => {
+    try {
+      Notiflix.Confirm.show(
+        "DELETE TOUR",
+        "Do you really wanna delete this tour?",
+        "YES",
+        "NO",
+        async () => {
+          const res = await axios.delete(
+            `https://holiday-api-zj3a.onrender.com/api/v1/tour/delete?fieldName=_id&value=${tour._id}`
           );
-          Cookies.set("userRole", formData.role);
-          navigate("/login");
-        } else {
-          Notiflix.Notify.failure("Account creation failed. Please try again.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error creating user:", error);
-        Notiflix.Notify.failure("Account creation failed. Please try again.");
-      });
+          window.location.reload();
+        },
+        () => {
+          Notiflix.Notify.info("You've canceled delete operation..");
+        },
+        {}
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleDeleteClick = (tours) => {
+    setTourToDelete(tours);
+    handleConfirmDelete();
+  };
+  const handleCancelDelete = () => {
+    setShowDeleteConfirm(false);
   };
 
-  return (
-    <div className="signup-container">
-      <div className="row">
-        <div className="left-side col-5">
-          <div className="signup-title">
-            <h2 className="signup-htitle">Sign Up</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-              expedita nam amet veniam labori
-            </p>
-          </div>
-          <div className="signup-form">
-            <div className="col-12">
-              <label className="label-input">Email Address</label>
-              <span className="input-box no-arrow">
-                <span className="icon">
-                  <i>
-                    <FaUserAlt />
-                  </i>
-                </span>
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="form-input"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </span>
-            </div>
-            <div className="col-12">
-              <label className="label-input">Full Name</label>
-              <span className="input-box no-arrow">
-                <span className="icon">
-                  <i>
-                    <FaUserAlt />
-                  </i>
-                </span>
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className="form-input"
-                  name="fullname"
-                  value={formData.fullname}
-                  onChange={handleChange}
-                  required
-                />
-              </span>
-            </div>
-            <div className="col-12">
-              <label className="label-input">Password</label>
-              <span className="input-box no-arrow">
-                <span className="icon">
-                  <i>
-                    <FaUserAlt />
-                  </i>
-                </span>
-                <input
-                  type="password"
-                  placeholder="Enter password"
-                  className="form-input"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-              </span>
-            </div>
-            <div className="col-12">
-              <label className="label-input">Phone Number</label>
-              <span className="input-box no-arrow">
-                <span className="icon">
-                  <i>
-                    <FaUserAlt />
-                  </i>
-                </span>
-                <input
-                  type="tel"
-                  placeholder="123-456-7890"
-                  className="form-input"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                />
-              </span>
-            </div>
-            <div className="col-12">
-              <label className="label-input">Location</label>
-              <span className="input-box no-arrow">
-                <span className="icon">
-                  <i>
-                    <FaUserAlt />
-                  </i>
-                </span>
-                <input
-                  type="text"
-                  placeholder="Location"
-                  className="form-input"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  required
-                />
-              </span>
-            </div>
-            <div className="col-12">
-              <button className="signup-button btn" onClick={handleSubmit}>
-                Sign Up
-              </button>
-            </div>
-            <p className="signup-bottom-text">
-              Already have an account? <a href="/login">Login</a>
-            </p>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://holiday-api-zj3a.onrender.com/api/v1/tour/all"
+        );
+        setTours(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    };
+
+    // async function to fetch data
+    fetchData();
+  }, []);
+
+  // Handle form input changes and update the formData state
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    setFormData({ ...formData, [name]: files[0] });
+  };
+
+  const handleAddTour = async (event) => {
+    event.preventDefault();
+
+    // Check for empty fields
+    for (const key in formData) {
+      if (formData[key] === "" || formData[key] === null) {
+        alert(`Please fill in the ${key} field.`);
+        return; // Exit the function if any field is empty
+      }
+    }
+
+    // Create the data object to send to the API
+    const data = new FormData();
+    for (const key in formData) {
+      data.append(key, formData[key]);
+    }
+
+    try {
+      // Send a POST request to your API
+      await axios.post(
+        "https://holiday-api-zj3a.onrender.com/api/v1/tour/addNew",
+        data
+      );
+
+      // Close the modal after successfully creating the tour
+      closeTourModel();
+
+      // You may also want to refresh the tour data to show the newly created tour.
+    } catch (error) {
+      console.error("Error creating tour:", error);
+      // Handle the error as needed (e.g., display an error message).
+    }
+  };
+
+  if (loading) {
+    return (
+      <div class="loader-wrapper">
+        <div class="loader">
+          <div class="loader-text">
+            Hold on while <img src={loaderImg} style={{ margin: "0 5px" }} />{" "}
+            loading your data ...
           </div>
         </div>
-        <div className="right-side col-7">
-          <div className="container">
-            <div className="signup-side-content" style={signupBgStyle}>
-              <div className="highlight-bg-video">
-                <video autoPlay muted loop>
-                  <source src={highlightVid} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div>Error: {error.message} </div>;
+  }
+
+  return (
+    <section className="dashboard-main">
+      <div className="dashboard-tour-sec">
+        <div className="container">
+          <div className="row">
+            <div className="dashboard-tour-main">
+              <div className="dashboard-tour-header">
+                <div className="section-title">
+                  <h2>tours</h2>
+                </div>
+                <div className="dashboard-tour-button">
+                  <a className="btn add-tour-btn" onClick={openTourModal}>
+                    <BiPlusCircle style={{ fontSize: "21px" }} />{" "}
+                    <span>add tour</span>
+                  </a>
+                </div>
               </div>
-              <div className="signup-cta-text">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Ducimus, corrupti exercitationem? Magni, doloribus.
-                  Consectetur doloribus at laborum veniam fugiat fugit nulla,
-                  excepturi, ut illo ad iusto corrupti ullam deleniti amet?
-                </p>
-                <h2>
-                  You're new here? <span>create an account</span>
-                </h2>
+            </div>
+
+            {isModalOpen && (
+              <div className="model-overlay">
+                <div
+                  className="modal"
+                  style={{
+                    position: "fixed",
+                    width: "100%",
+                    top: "0",
+                    left: "0",
+                    background: "#2b2b2b80",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    overflow: "auto",
+                  }}
+                >
+                  <div className="edit-tour">
+                    <h2>
+                      edit tour #<span>trip-name</span>
+                    </h2>
+                    <form
+                      className="edit-tour-form"
+                      style={{ maxHeight: "180vh" }}
+                    >
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <BiCurrentLocation />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Destination"
+                            className="form-input"
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <FaUpload />
+                          </span>
+                          <input
+                            type="file"
+                            placeholder="upload Image"
+                            className="form-input"
+                            accept="image/*"
+                            onChange={(e) => {
+                              const file = e.target.files[0];
+                            }}
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdTitle />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Title"
+                            className="form-input"
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdOutlineDescription />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Description"
+                            className="form-input"
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <GiTimeBomb />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Duration"
+                            className="form-input"
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdGroups />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Group Size"
+                            className="form-input"
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdPriceChange />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Price"
+                            className="form-input"
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <TbDiscountCheckFilled />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Discount: Percentage"
+                            className="form-input"
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdTour />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Tour Type"
+                            className="form-input"
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdDepartureBoard />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Departure"
+                            className="form-input"
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdAirlineSeatReclineExtra />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Seats"
+                            className="form-input"
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <FaCalendarAlt />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="From Month"
+                            className="form-input"
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <FaCalendarAlt />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="To Month"
+                            className="form-input"
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdOutlineDepartureBoard />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Departure Time"
+                            className="form-input"
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <GiBackwardTime />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Return Time"
+                            className="form-input"
+                          />
+                        </span>
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <FcGallery />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Gallery"
+                            className="form-input"
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <div className=" edit-tour-btn">
+                          <button className="btn confirm-btn">confirm</button>
+                          <button
+                            className="btn cancel-btn"
+                            onClick={closeModal}
+                          >
+                            cancel
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {addTourModel && (
+              <div className="model-overlay">
+                <div
+                  className="modal"
+                  style={{
+                    position: "fixed",
+                    width: "100%",
+                    top: "0",
+                    left: "0",
+                    background: "#2b2b2b80",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    overflow: "auto",
+                  }}
+                >
+                  <div className="edit-tour">
+                    <h2>create tour</h2>
+                    <form
+                      className="edit-tour-form"
+                      style={{ maxHeight: "180vh" }}
+                      onSubmit={handleAddTour}
+                    >
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <BiCurrentLocation />
+                          </span>
+                          <input
+                            type="text"
+                            name="destination"
+                            placeholder="Destination"
+                            className="form-input"
+                            value={formData.destination}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                destination: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <FaUpload />
+                          </span>
+                          <input
+                            type="file"
+                            name="backdropImage"
+                            placeholder="Upload Image"
+                            className="form-input"
+                            accept="image/*"
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                backdropImage: e.target.files[0],
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdTitle />
+                          </span>
+                          <input
+                            type="text"
+                            name="title"
+                            placeholder="Title"
+                            className="form-input"
+                            value={formData.title}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                title: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdOutlineDescription />
+                          </span>
+                          <input
+                            type="text"
+                            name="description"
+                            placeholder="Description"
+                            className="form-input"
+                            value={formData.Description}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Description: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <GiTimeBomb />
+                          </span>
+                          <input
+                            type="text"
+                            name="duration"
+                            placeholder="Duration"
+                            className="form-input"
+                            value={formData.Duration}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Duration: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdGroups />
+                          </span>
+                          <input
+                            type="text"
+                            name="Group_size"
+                            placeholder="Group Size"
+                            className="form-input"
+                            value={formData.Group_size}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Group_size: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdPriceChange />
+                          </span>
+                          <input
+                            type="text"
+                            name="Price"
+                            placeholder="Price[$]"
+                            className="form-input"
+                            value={formData.Price}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Price: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <TbDiscountCheckFilled />
+                          </span>
+                          <input
+                            type="text"
+                            name="Discount"
+                            placeholder="Discount: Percentage"
+                            className="form-input"
+                            value={formData.Discount}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Discount: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdTour />
+                          </span>
+                          <input
+                            type="text"
+                            name="tourType"
+                            placeholder="Tour Type"
+                            className="form-input"
+                            value={formData.Tour_type}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Tour_type: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdDepartureBoard />
+                          </span>
+                          <input
+                            type="text"
+                            name="departure"
+                            placeholder="Departure"
+                            className="form-input"
+                            value={formData.Departure}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Departure: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdAirlineSeatReclineExtra />
+                          </span>
+                          <input
+                            type="text"
+                            name="seats"
+                            placeholder="Seats"
+                            className="form-input"
+                            value={formData.Seats}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Seats: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <FaCalendarAlt />
+                          </span>
+                          <input
+                            type="text"
+                            name="fromMonth"
+                            placeholder="From Month"
+                            className="form-input"
+                            value={formData.fromMonth}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                fromMonth: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <FaCalendarAlt />
+                          </span>
+                          <input
+                            type="text"
+                            name="toMonth"
+                            placeholder="To Month"
+                            className="form-input"
+                            value={formData.toMonth}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                toMonth: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <MdOutlineDepartureBoard />
+                          </span>
+                          <input
+                            type="text"
+                            name="departureTime"
+                            placeholder="Departure Time"
+                            className="form-input"
+                            value={formData.departureTime}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                departureTime: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <GiBackwardTime />
+                          </span>
+                          <input
+                            type="text"
+                            name="returnTime"
+                            placeholder="Return Time"
+                            className="form-input"
+                            value={formData.ReturnTime}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                ReturnTime: e.target.value,
+                              })
+                            }
+                          />
+                        </span>
+                        <span className="input-box no-arrow col-6">
+                          <span className="icon">
+                            <FcGallery />
+                          </span>
+                          <input
+                            type="file"
+                            name="gallery"
+                            placeholder="Gallery"
+                            className="form-input"
+                            accept="image/*"
+                            multiple // Allow multiple images
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                Gallery: e.target.files[0],
+                              })
+                            }
+                          />
+                        </span>
+                      </div>
+
+                      <div className="col-12">
+                        <div className="edit-tour-btn">
+                          <button type="submit" className="btn confirm-btn">
+                            confirm
+                          </button>
+                          <button
+                            className="btn cancel-btn"
+                            onClick={closeTourModel}
+                          >
+                            cancel
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="dashboard-tour-main">
+              <div className="dashboard-container container">
+                <div className="row">
+                  <div className="dashboard-tour-table-header">
+                    <div className="row">
+                      <span className="table-header col-3">
+                        destination image
+                      </span>
+                      <span className="table-header col-2">destination</span>
+                      <span className="table-header duration-header col-2">
+                        duration
+                      </span>
+                      <span className="table-header col-2">group size</span>
+                      <span className="table-header col-1">price</span>
+                      <span className="table-header col-2">actions</span>
+                    </div>
+                  </div>
+                  <div className="dashboard-tour-table-content">
+                    {tours.map((tour) => (
+                      <div className="row" key={tour._id}>
+                        <span className="destinationValue col-3">
+                          <img
+                            src={tour.backdropImage}
+                            style={{
+                              height: "30px",
+                              width: "100%",
+                              objectFit: "contain",
+                            }}
+                          />
+                        </span>
+                        <span className="destinationValue col-2">
+                          {tour.title}
+                        </span>
+                        <span className="durationValue col-2">
+                          {tour.Duration}
+                        </span>
+                        <span className="destinationValue col-2">
+                          {tour.Group_size}
+                        </span>
+                        <span className="destinationValue col-1">
+                          $ {tour.Price}
+                        </span>
+                        <span className="destinationValue col-2">
+                          <button
+                            className="table-action-btn"
+                            onClick={openModal}
+                          >
+                            <AiTwotoneEdit />
+                          </button>
+                          <button className="table-action-btn" onClick={() => handleConfirmDelete(tour)}>
+                            <FaTrash />
+                          </button>
+                          {showDeleteConfirm && (
+                            <div className="popup">
+                              <p>
+                                Are you sure you want to delete{" "}
+                                {tourToDelete._id}?
+                              </p>
+                              <button onClick={handleDeleteClick}>Ok</button>
+                              <button onClick={handleCancelDelete}>
+                                Cancel
+                              </button>
+                            </div>
+                          )}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
-export default Signup;
+export default dashboardTour;

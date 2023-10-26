@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Notiflix from "notiflix";
 
 import { BiPlusCircle, BiCurrentLocation } from "react-icons/bi";
 import { BsPencilFill } from "react-icons/bs";
 import { FaTrash, FaCalendarAlt, FaUpload } from "react-icons/fa";
 import { FcGallery } from "react-icons/fc";
 import { GiTimeBomb, GiBackwardTime } from "react-icons/gi";
-import { ImPriceTag } from "react-icons/im";
+import { AiTwotoneEdit } from "react-icons/ai";
 import {
   MdTitle,
   MdOutlineDescription,
@@ -67,6 +68,38 @@ function dashboardTour() {
     setAddTourModel(false);
   };
 
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [tourToDelete, setTourToDelete] = useState(null);
+  const handleConfirmDelete = async (tour) => {
+    try {
+      Notiflix.Confirm.show(
+        "DELETE TOUR",
+        "Do you really wanna delete this tour?",
+        "YES",
+        "NO",
+        async () => {
+          const res = await axios.delete(
+            `https://holiday-api-zj3a.onrender.com/api/v1/tour/delete?fieldName=_id&value=${tour._id}`
+          );
+          window.location.reload();
+        },
+        () => {
+          Notiflix.Notify.info("You've canceled delete operation..");
+        },
+        {}
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleDeleteClick = (tours) => {
+    setTourToDelete(tours);
+    handleConfirmDelete();
+  };
+  const handleCancelDelete = () => {
+    setShowDeleteConfirm(false);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -102,7 +135,7 @@ function dashboardTour() {
     // Check for empty fields
     for (const key in formData) {
       if (formData[key] === "" || formData[key] === null) {
-        alert(`Please fill in the ${key} field.`);
+        Notiflix.Notify.warning(`Please fill the ${key} field.`);
         return; // Exit the function if any field is empty
       }
     }
@@ -128,6 +161,7 @@ function dashboardTour() {
       console.error("Error creating tour:", error);
       // Handle the error as needed (e.g., display an error message).
     }
+    window.location.reload();
   };
 
   if (loading) {
@@ -135,8 +169,7 @@ function dashboardTour() {
       <div class="loader-wrapper">
         <div class="loader">
           <div class="loader-text">
-            Hold on while <img src={loaderImg} style={{ margin: "0 5px" }} />{" "}
-            loading your data ...
+            <img src={loaderImg} style={{ margin: "0 5px", opacity: '.6'}} />{" "}
           </div>
         </div>
       </div>
@@ -772,7 +805,9 @@ function dashboardTour() {
                         destination image
                       </span>
                       <span className="table-header col-2">destination</span>
-                      <span className="table-header col-2">duration</span>
+                      <span className="table-header duration-header col-2">
+                        duration
+                      </span>
                       <span className="table-header col-2">group size</span>
                       <span className="table-header col-1">price</span>
                       <span className="table-header col-2">actions</span>
@@ -794,25 +829,40 @@ function dashboardTour() {
                         <span className="destinationValue col-2">
                           {tour.title}
                         </span>
-                        <span className="destinationValue col-2">
+                        <span className="durationValue col-2">
                           {tour.Duration}
                         </span>
                         <span className="destinationValue col-2">
                           {tour.Group_size}
                         </span>
                         <span className="destinationValue col-1">
-                          {tour.Price}
+                          $ {tour.Price}
                         </span>
                         <span className="destinationValue col-2">
                           <button
                             className="table-action-btn"
                             onClick={openModal}
                           >
-                            <BsPencilFill />
+                            <AiTwotoneEdit />
                           </button>
-                          <button className="table-action-btn">
+                          <button
+                            className="table-action-btn"
+                            onClick={() => handleConfirmDelete(tour)}
+                          >
                             <FaTrash />
                           </button>
+                          {showDeleteConfirm && (
+                            <div className="popup">
+                              <p>
+                                Are you sure you want to delete{" "}
+                                {tourToDelete._id}?
+                              </p>
+                              <button onClick={handleDeleteClick}>Ok</button>
+                              <button onClick={handleCancelDelete}>
+                                Cancel
+                              </button>
+                            </div>
+                          )}
                         </span>
                       </div>
                     ))}

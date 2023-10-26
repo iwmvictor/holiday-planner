@@ -36,7 +36,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route index element={<Dashboard />} />
           <Route path="tour" element={<AdminTourMgt />} />
           <Route path="places" element={<AdminPlaces />} />
-          <Route path="chat" element={<AdminChat />} />
+          <Route path="booking" element={<AdminChat />} />
           <Route path="user" element={<Users/>}/>
         </Route>
         <Route path="/login" element={<Login />} />
