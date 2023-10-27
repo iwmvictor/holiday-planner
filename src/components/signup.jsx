@@ -34,7 +34,7 @@ function Signup() {
       [name]: value,
     });
     if (name === "email" && value.includes("@")) {
-      Notiflix.Notify.info("You've entered email address'.");
+      // Notiflix.Notify.info("You've entered email address'.");
     }
   };
 

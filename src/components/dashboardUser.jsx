@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Notiflix from "notiflix";
 
 import { BiPlusCircle, BiFilter } from "react-icons/bi";
 import { AiTwotoneEdit } from "react-icons/ai";
@@ -17,15 +18,14 @@ import {
 import { IoLocation } from "react-icons/io5";
 
 import loaderImg from "../assets/ajax-loader.gif";
-import Notiflix from "notiflix";
 
 function dashboardUser() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [userForEdit, setUserForEdit] = useState(null);
   const [addUserModal, setAddUserModal] = useState(false);
+  const [userForEdit, setUserForEdit] = useState(null);
 
   const openModal = (user) => {
     Notiflix.Notify.info("Edit user form");
@@ -62,30 +62,45 @@ function dashboardUser() {
       });
   }, []);
 
-  const handleDeleteUser = (userId) => {
-    // Send a DELETE request to the API to delete the user
-    axios
-      .delete(
-        `https://holiday-api-zj3a.onrender.com/api/v1/auth/users/delete/{email}`
-      )
-      .then(() => {
-        // Filter out the deleted user from the list of users
-        setUsers((prevUsers) =>
-          prevUsers.filter((user) => user.email !== email)
-        );
-      })
-      .catch((err) => {
-        console.error("Error deleting user:", err);
-      });
+  const handleDeleteUser = (user) => {
+    Notiflix.Confirm.show(
+      "Confirm Delete",
+      `Are you sure you want to delete ${user.fullNames}?`,
+      "Yes",
+      "No",
+      function () {
+        // User clicked "Yes," so proceed with deletion
+        axios
+          .delete(
+            `https://holiday-api-zj3a.onrender.com/api/v1/auth/users/delete/${user.email}`
+          )
+          .then(() => {
+            const updatedUsers = users.filter((u) => u._id !== user._id);
+            setUsers(updatedUsers);
+          })
+          .catch((error) => {
+            console.error("Error deleting user:", error);
+          });
+      },
+      function () {
+        // User clicked "No," so do nothing
+        // console.log("Deletion canceled");
+        Notiflix.Notify.info("Deletion canceled");
+      }
+    );
   };
 
   if (loading) {
     return (
       <div class="loader-wrapper">
         <div class="loader">
-          <div class="loader-text">
-            <img src={loaderImg} style={{ margin: "0 5px", opacity: '.6' }} />{" "}
-          </div>{" "}
+          <div class="circle outer">
+            <div class="circle middle">
+              <div class="circle inner">
+                <div class="circle inniest"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -430,67 +445,6 @@ function dashboardUser() {
                         </div>
                       </div>
                       <div className="user-list">
-                        {/* <div className="user-detail">
-                          <div className="row col-12">
-                            <div className="user-check-box input-box col-1">
-                              <input type="checkbox" className="form-input" />
-                            </div>
-                            <div className="user-fullname col-3">
-                              <span className="userName">iman gadzhi</span>
-                            </div>
-                            <div className="user-email col-2">
-                              <span className="userEmail">iman@gmail.com</span>
-                            </div>
-                            <div className="user-phone col-2">
-                              <span className="userPhone">250781222994</span>
-                            </div>
-                            <div className="user-location col-1">
-                              <span className="userLocation">Rwanda</span>
-                            </div>
-                            <div className="user-status col-1">
-                              <span className="userStatus">user</span>
-                            </div>
-                            <div className="user-action col-2">
-                              <button className="table-action-btn">
-                                <BsPencilFill />
-                              </button>
-                              <button className="table-action-btn">
-                                <FaTrash />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="user-detail">
-                          <div className="row col-12">
-                            <div className="user-check-box input-box col-1">
-                              <input type="checkbox" className="form-input" />
-                            </div>
-                            <div className="user-fullname col-3">
-                              <span className="userName">vusi thembakutu</span>
-                            </div>
-                            <div className="user-email col-2">
-                              <span className="userEmail">vusi@gmail.com</span>
-                            </div>
-                            <div className="user-phone col-2">
-                              <span className="userPhone">250781222994</span>
-                            </div>
-                            <div className="user-location col-1">
-                              <span className="userLocation">kenya</span>
-                            </div>
-                            <div className="user-status col-1">
-                              <span className="userStatus">user</span>
-                            </div>
-                            <div className="user-action col-2">
-                              <button className="table-action-btn">
-                                <BsPencilFill />
-                              </button>
-                              <button className="table-action-btn">
-                                <FaTrash />
-                              </button>
-                            </div>
-                          </div>
-                        </div>  */}
-
                         {users.map((user) => (
                           <div className="user-detail" key={user._id}>
                             <div className="row col-12">
@@ -528,7 +482,7 @@ function dashboardUser() {
 
                                 <button
                                   className="table-action-btn"
-                                  onClick={() => handleDeleteUser(user.email)}
+                                  onClick={() => handleDeleteUser(user)}
                                 >
                                   <FaTrash />
                                 </button>

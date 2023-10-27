@@ -49,10 +49,31 @@ function dashboardTour() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userForEdit, setUserForEdit] = useState(null);
+  const [tourToEdit, setTourToEdit] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [addTourModel, setAddTourModel] = useState(false);
 
-  const openModal = () => {
+  const openModal = (tour) => {
+    setTourToEdit(tour);
+    setFormData({
+      destination: tour.destination || "",
+      backdropImage: null, // Set to null, as it's not clear from your code
+      title: tour.title || "",
+      Description: tour.Description || "",
+      Duration: tour.Duration || "",
+      Group_size: tour.Group_size || "",
+      Price: tour.Price || "",
+      Discount: tour.Discount || "",
+      Tour_type: tour.Tour_type || "",
+      Departure: tour.Departure || "",
+      Seats: tour.Seats || "",
+      fromMonth: tour.fromMonth || "",
+      toMonth: tour.toMonth || "",
+      departureTime: tour.departureTime || "",
+      ReturnTime: tour.ReturnTime || "",
+      Gallery: null,
+    });
+
     setModalOpen(true);
   };
 
@@ -164,12 +185,53 @@ function dashboardTour() {
     window.location.reload();
   };
 
+  const handleEditTour = async (event) => {
+    event.preventDefault();
+
+    // Check for empty fields
+    for (const key in formData) {
+      if (formData[key] === "" || formData[key] === null) {
+        Notiflix.Notify.warning(`Please fill the ${key} field.`);
+        return; // Exit the function if any field is empty
+      }
+    }
+
+    // Create the data object to send to the API
+    const data = new FormData();
+    for (const key in formData) {
+      data.append(key, formData[key]);
+    }
+
+    try {
+      // Send a POST request to your API
+      const response = await axios.put(
+        `https://holiday-api-zj3a.onrender.com/api/v1/tour/updateEntireElement`,
+        data
+      );
+      console.log("API Response:", response);
+
+      // Close the modal after successfully creating the tour
+      closeTourModel();
+      setTourToEdit(null);
+
+      // You may also want to refresh the tour data to show the newly created tour.
+    } catch (error) {
+      console.error("Error editing tour:", error);
+      // Handle the error as needed (e.g., display an error message).
+    }
+    // window.location.reload();
+  };
+
   if (loading) {
     return (
       <div class="loader-wrapper">
         <div class="loader">
-          <div class="loader-text">
-            <img src={loaderImg} style={{ margin: "0 5px", opacity: '.6'}} />{" "}
+          <div class="circle outer">
+            <div class="circle middle">
+              <div class="circle inner">
+                <div class="circle inniest"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -222,6 +284,10 @@ function dashboardTour() {
                     <form
                       className="edit-tour-form"
                       style={{ maxHeight: "180vh" }}
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleEditTour(e);
+                      }}
                     >
                       <div className="col-12">
                         <span className="input-box no-arrow col-6">
@@ -232,6 +298,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="Destination"
                             className="form-input"
+                            name="destination"
+                            value={formData.destination}
+                            onChange={handleInputChange}
                           />
                         </span>
 
@@ -244,9 +313,8 @@ function dashboardTour() {
                             placeholder="upload Image"
                             className="form-input"
                             accept="image/*"
-                            onChange={(e) => {
-                              const file = e.target.files[0];
-                            }}
+                            name="backdropImage"
+                            onChange={handleFileChange}
                           />
                         </span>
                       </div>
@@ -260,6 +328,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="Title"
                             className="form-input"
+                            name="title"
+                            value={formData.title}
+                            onChange={handleInputChange}
                           />
                         </span>
 
@@ -271,6 +342,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="Description"
                             className="form-input"
+                            name="Description"
+                            value={formData.Description}
+                            onChange={handleInputChange}
                           />
                         </span>
                       </div>
@@ -284,6 +358,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="Duration"
                             className="form-input"
+                            name="Duration"
+                            value={formData.Duration}
+                            onChange={handleInputChange}
                           />
                         </span>
 
@@ -295,6 +372,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="Group Size"
                             className="form-input"
+                            name="Group_size"
+                            value={formData.Group_size}
+                            onChange={handleInputChange}
                           />
                         </span>
                       </div>
@@ -308,6 +388,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="Price"
                             className="form-input"
+                            name="Price"
+                            value={formData.Price}
+                            onChange={handleInputChange}
                           />
                         </span>
 
@@ -319,6 +402,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="Discount: Percentage"
                             className="form-input"
+                            name="Discount"
+                            value={formData.Discount}
+                            onChange={handleInputChange}
                           />
                         </span>
                       </div>
@@ -332,6 +418,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="Tour Type"
                             className="form-input"
+                            name="Tour_type"
+                            value={formData.Tour_type}
+                            onChange={handleInputChange}
                           />
                         </span>
 
@@ -343,6 +432,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="Departure"
                             className="form-input"
+                            name="Departure"
+                            value={formData.Departure}
+                            onChange={handleInputChange}
                           />
                         </span>
                       </div>
@@ -356,6 +448,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="Seats"
                             className="form-input"
+                            name="Seats"
+                            value={formData.Seats}
+                            onChange={handleInputChange}
                           />
                         </span>
 
@@ -367,6 +462,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="From Month"
                             className="form-input"
+                            name="fromMonth"
+                            value={formData.fromMonth}
+                            onChange={handleInputChange}
                           />
                         </span>
                       </div>
@@ -380,6 +478,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="To Month"
                             className="form-input"
+                            name="toMonth"
+                            value={formData.toMonth}
+                            onChange={handleInputChange}
                           />
                         </span>
 
@@ -391,6 +492,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="Departure Time"
                             className="form-input"
+                            name="departureTime"
+                            value={formData.departureTime}
+                            onChange={handleInputChange}
                           />
                         </span>
                       </div>
@@ -404,6 +508,9 @@ function dashboardTour() {
                             type="text"
                             placeholder="Return Time"
                             className="form-input"
+                            name="ReturnTime"
+                            value={formData.ReturnTime}
+                            onChange={handleInputChange}
                           />
                         </span>
                         <span className="input-box no-arrow col-6">
@@ -411,16 +518,22 @@ function dashboardTour() {
                             <FcGallery />
                           </span>
                           <input
-                            type="text"
+                            type="file"
                             placeholder="Gallery"
                             className="form-input"
+                            accept="image/*"
+                            multiple
+                            name="Gallery"
+                            onChange={handleFileChange}
                           />
                         </span>
                       </div>
 
                       <div className="col-12">
                         <div className=" edit-tour-btn">
-                          <button className="btn confirm-btn">confirm</button>
+                          <button type="submit" className="btn confirm-btn">
+                            confirm
+                          </button>
                           <button
                             className="btn cancel-btn"
                             onClick={closeModal}
@@ -434,7 +547,6 @@ function dashboardTour() {
                 </div>
               </div>
             )}
-
             {addTourModel && (
               <div className="model-overlay">
                 <div
@@ -841,7 +953,7 @@ function dashboardTour() {
                         <span className="destinationValue col-2">
                           <button
                             className="table-action-btn"
-                            onClick={openModal}
+                            onClick={() => openModal(tour)}
                           >
                             <AiTwotoneEdit />
                           </button>

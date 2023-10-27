@@ -25,7 +25,19 @@ function TourDetail() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div class="loader-wrapper">
+        <div class="loader">
+          <div class="circle outer">
+            <div class="circle middle">
+              <div class="circle inner">
+                <div class="circle inniest"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (error) {

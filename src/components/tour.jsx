@@ -76,9 +76,13 @@ function tour() {
     return (
       <div class="loader-wrapper">
         <div class="loader">
-          <div class="loader-text">
-            |<img src={loaderImg} style={{ margin: "0 5px", opacity: '.6' }} />{" "}
-          </div>{" "}
+          <div class="circle outer">
+            <div class="circle middle">
+              <div class="circle inner">
+                <div class="circle inniest"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
