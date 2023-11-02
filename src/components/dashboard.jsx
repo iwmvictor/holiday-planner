@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Chart from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
- 
+import axios from "axios";
+
 import {
   BsGrid,
   BsChevronDown,
@@ -39,7 +40,6 @@ import friend2 from "../assets/friend2.jpg";
 import "../style/dashboard.css";
 
 function dashboard() {
-
   // //allowing only logged in user to access dashboard
   // if(!localStorage.getItem("login")){
   //   alert("Please log into your account first!!")
@@ -48,6 +48,41 @@ function dashboard() {
   //   window.location.href="/dashboard"
   // }
 
+  const [numUsers, setNumUsers] = useState(0);
+
+  // Fetch the number of users from the API
+  useEffect(() => {
+    axios
+      .get("https://holiday-api-zj3a.onrender.com/api/v1/auth/users")
+      .then((response) => {
+        // Update the state with the number of users from the API response
+        setNumUsers(response.data.length);
+      })
+      .catch((error) => {
+        console.error("Error fetching number of users: ", error);
+      });
+  }, []);
+
+  const [numberOfTours, setNumberOfTours] = useState(null);
+
+  // Function to fetch the number of tours from the API
+  const fetchNumberOfTours = async () => {
+    try {
+      const response = await axios.get(
+        "https://holiday-api-zj3a.onrender.com/api/v1/tour/all"
+      );
+      // Extract the number of tours from the response data
+      const totalTours = response.data.length;
+      setNumberOfTours(totalTours);
+    } catch (error) {
+      console.error("Error fetching number of tours: ", error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch the number of tours when the component mounts
+    fetchNumberOfTours();
+  }, []);
 
   // Define chart data
   const data = {
@@ -146,11 +181,11 @@ function dashboard() {
               </div>
               <div className="row right-header-nav">
                 <div className="setting">
-                  <span className="settings" style={{color: '#924aef'}}>
+                  <span className="settings" style={{ color: "#924aef" }}>
                     <BiSlider />
                   </span>
                 </div>
-                <div className="theme" style={{color: '#a5a5a5'}}>
+                <div className="theme" style={{ color: "#a5a5a5" }}>
                   <span className="light-them">
                     <MdOutlineLightMode />
                   </span>
@@ -168,11 +203,11 @@ function dashboard() {
                       <div className="upper-content-data">
                         <div className="row">
                           <div className="text1">
-                            <h5 className="h5-title">Total Bookings</h5>
-                            <span className="booking-value">845</span>
+                            <h5 className="h5-title">Number of Users</h5>
+                            <span className="booking-value">{numUsers}</span>
                           </div>
                           <div className="side-icon">
-                            <FaUmbrellaBeach style={{color: '#a5a5a5'}}/>
+                            <FaUmbrellaBeach style={{ color: "#a5a5a5" }} />
                           </div>
                         </div>
                       </div>
@@ -190,11 +225,11 @@ function dashboard() {
                       <div className="upper-content-data">
                         <div className="row">
                           <div className="text1">
-                            <h5 className="h5-title">Total Expenses</h5>
-                            <span className="expense-value">213</span>
+                            <h5 className="h5-title">Total Tours</h5>
+                            <span className="expense-value">{numberOfTours}</span>
                           </div>
                           <div className="side-icon">
-                            <FaUmbrellaBeach style={{color: '#a5a5a5'}} />
+                            <FaUmbrellaBeach style={{ color: "#a5a5a5" }} />
                           </div>
                         </div>
                       </div>

@@ -4,7 +4,6 @@ import axios from "axios";
 import Notiflix from "notiflix";
 
 import { BiPlusCircle, BiCurrentLocation } from "react-icons/bi";
-import { BsPencilFill } from "react-icons/bs";
 import { FaTrash, FaCalendarAlt, FaUpload } from "react-icons/fa";
 import { FcGallery } from "react-icons/fc";
 import { GiTimeBomb, GiBackwardTime } from "react-icons/gi";

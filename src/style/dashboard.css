@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+.meyvn:root {
+  --primary-color: #003366;
+  --sec-color: #00cc66;
+  --accent-color: #ffd700;
+  --heading-bold-font: lato;
+  --body-text-font: roboto;
+}
+
 :root {
   /* Light Mode Colors */
   --background-light: #f9f9f9;
@@ -104,7 +112,6 @@ ul {
 /*=== DASHBOARD STYLES ====*/
 
 .dashboard,
-.admin-chat,
 .tour-mgt {
   width: 100%;
   height: 100%;
@@ -748,7 +755,7 @@ ul {
 /*======>> CHAT APP/DASHBOARD <<=====*/
 
 .admin-chat {
-  width: calc(100% - 230px);
+  width: calc(100% - 250px);
 }
 
 .admin-chat .chat-app {
@@ -792,6 +799,13 @@ ul {
 }
 .chat-main-nav .row .chat-trash {
   border-top-right-radius: 10px;
+}
+
+span.chat-user-msg.col-6 p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }
 
 .chat-main-nav .row .chat-inbox:hover,
@@ -1603,7 +1617,7 @@ span.input-box.no-arrow.col-6 {
 }
 
 .navlog {
-  top: 20vh;
+  bottom: -13vh;
   position: relative;
 }
 
@@ -1662,4 +1676,208 @@ span.input-box.no-arrow.col-6 {
     span.durationValue {
     display: none;
   }
+}
+
+.contact-list .dashboard-contact {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px;
+}
+
+.dashboard-contact .dashboard-contact-header {
+  padding: 10px;
+  background: #0006;
+  margin: auto;
+  width: 100%;
+}
+
+.dashboard-contact-header .row.header-contact {
+  flex-direction: column;
+  width: 100%;
+  margin: auto;
+}
+
+.dashboard-contact-header .row .contact-title {
+  font-size: 21px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--black-color);
+}
+
+.dashboard-contact-header .row .contact-subtitle {
+  font-size: 16px;
+  color: var(--content-light);
+  text-transform: capitalize;
+}
+
+.dashboard-contact .dashboard-contact-body {
+  margin-top: 5px;
+  padding: 10px;
+  width: 100%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background: var(--white-color);
+}
+
+.dashboard-contact-body .contact-header .row {
+  width: 100%;
+  margin: auto;
+  padding: 10px;
+  font-weight: bold;
+  justify-content: center;
+  flex-direction: row;
+  text-transform: uppercase;
+  box-shadow: 0 0 6x var(--background-light);
+  border-bottom: 5px solid var(--background-light);
+}
+
+.dashboard-contact-body .contact-body .row {
+  width: 100%;
+  margin: auto;
+  padding: 10px 5px;
+  justify-content: center;
+  border-bottom: 1px solid var(--content-light);
+}
+
+.dashboard-contact-body .contact-body .row:last-child {
+  border-bottom: none;
+}
+
+.dashboard-contact-body .contact-body {
+  width: 100%;
+  flex-basis: 100%;
+  padding-top: 20px;
+}
+
+.dashboard-contact-body .contact-body .row {
+  flex-direction: row;
+}
+
+.dashboard-contact-body .contact-body .row:hover {
+  background: var(--background-light);
+}
+
+.contact-body .contact-msg-content {
+  margin-bottom: 2px;
+}
+
+.contact-body .contact-msg-content span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.contact-body .contact-msg-content span.contact-fullname,
+.contact-body .contact-msg-content span.contact-service {
+  text-transform: capitalize;
+}
+.contact-body .contact-msg-content span.contact-service {
+  color: var(--yellow-color);
+}
+
+.contact-body .contact-msg-content span.contact-action button {
+  border: 0;
+  margin: 2px;
+  padding: 5px;
+  border-radius: 50%;
+  font-size: 11px;
+  align-items: center;
+  font-weight: lighter;
+  justify-content: center;
+  background: var(--background-light);
+  transition: var(--transition);
+}
+
+.contact-body .contact-msg-content span.contact-action button:hover {
+  box-shadow: 0 0 2px var(--content-light);
+}
+
+.dashboard-user-sec .container .tour-booking {
+  width: 100%;
+}
+
+.tour-booking .row .booking-header,
+.tour-booking .row .booking-body {
+  width: 100%;
+  background: var(--white-color);
+}
+
+.tour-booking .row .booking-header {
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  width: 100%;
+}
+
+.dashboard-user-sec .booking-header .row {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.booking-header .row div {
+  display: flex;
+  flex-direction: column;
+}
+
+.row .booking-header-title span.booking-title {
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: 23px;
+  color: var(--content-light);
+}
+.row .booking-header-title span.booking-subtitle {
+  text-transform: capitalize;
+  font-weight: lighter;
+  font-size: 16px;
+  color: var(--content-light);
+}
+
+.row .total-bookings span {
+  text-transform: capitalize;
+  color: var(--content-light);
+}
+.row .total-bookings span b {
+  color: var(--black-color);
+  text-decoration: underline;
+}
+
+.tour-booking .row .booking-body {
+  margin-top: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.booking-body .row {
+  width: 100%;
+  margin: auto;
+  padding: 5px;
+}
+
+.row .bookings-header .row {
+  flex-direction: row;
+  border-bottom: 2px solid var(--content-light);
+}
+
+.row .bookings-header .row span {
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--content-light);
+  text-align: center;
+}
+
+.row .bookings-content .row {
+  flex-direction: row;
+}
+
+.row .bookings-content .row span {
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }

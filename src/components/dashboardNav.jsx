@@ -3,6 +3,7 @@ import React from "react";
 import { BsGrid } from "react-icons/bs";
 import { FaAngleRight, FaCalendarCheck, FaUsers } from "react-icons/fa";
 import { GiCommercialAirplane } from "react-icons/gi";
+import { BiSolidMessageDetail } from "react-icons/bi";
 
 import logoImg from "../assets/logo.png";
 import { BiLogOut } from "react-icons/bi";
@@ -28,6 +29,11 @@ function dashboardNav() {
             <div className="dashboard-navlink">
               <a href="/dashboard/tour">
                 <GiCommercialAirplane /> <span>tours</span> <FaAngleRight />
+              </a>
+            </div>
+            <div className="dashboard-navlink">
+              <a href="/dashboard/chat">
+                <BiSolidMessageDetail /> <span>chat</span> <FaAngleRight />
               </a>
             </div>
             <div className="dashboard-navlink">

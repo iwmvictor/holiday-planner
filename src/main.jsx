@@ -12,8 +12,8 @@ import Tour from "./components/tour";
 import Dashboard from "./components/dashboard";
 import DashboardNav from "./components/dashboardNav";
 import AdminTourMgt from "./components/dashboardTour";
-import AdminPlaces from "./components/dashboardPlace";
-import AdminChat from "./components/dashboardChat";
+import Booking from "./components/dashboardBooking";
+import Chat from "./components/dashboardChat";
 import RebaTour from "./components/reba";
 import TourLayout from "./components/TourLayout";
 import Users from "./components/dashboardUser"
@@ -35,8 +35,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="tour" element={<AdminTourMgt />} />
-          <Route path="places" element={<AdminPlaces />} />
-          <Route path="booking" element={<AdminChat />} />
+          <Route path="booking" element={<Booking />} />
+          <Route path="chat" element={<Chat />} />
           <Route path="user" element={<Users/>}/>
         </Route>
         <Route path="/login" element={<Login />} />
