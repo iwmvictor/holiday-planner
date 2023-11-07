@@ -1881,3 +1881,33 @@ span.input-box.no-arrow.col-6 {
   text-overflow: ellipsis;
   display: block;
 }
+
+span.booking-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+span.booking-btn button{
+  margin-right: 1px;
+  flex-basis: 40%;
+  font-size: 10px;
+  border: 0;
+  padding: 5px;
+  border-radius: 50%;
+  font-weight: lighter;
+  border: 1px solid transparent;
+  color: var(--black-color);
+  background: var(--yellow-color);
+  transition: var(--transition);
+}
+
+span.booking-btn button:last-child{
+  background: var(--background-light);
+}
+
+span.booking-btn button:hover{
+  color: var(--white-color);
+  background: var(--yellow-color);
+  border-color: var(--background-light);
+}

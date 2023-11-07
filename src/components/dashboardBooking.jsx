@@ -1,6 +1,96 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Notiflix from "notiflix";
+import axios from "axios";
 
-function dashboardPlace() {
+import { FaTrash } from "react-icons/fa";
+import { BiSolidEditAlt } from "react-icons/bi";
+
+function DashboardBooking() {
+  const [bookings, setBookings] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [tours, setTours] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [bookingLength, setBookingLength] = useState(0);
+
+  useEffect(() => {
+    // Fetch all bookings
+    axios
+      .get("https://holiday-api-zj3a.onrender.com/api/v1/booking/all")
+      .then((response) => {
+        setBookings(response.data);
+        setLoading(false);
+        setBookingLength(response.data.length);
+      })
+      .catch((error) => {
+        console.error("Error fetching bookings:", error);
+        setLoading(false);
+      });
+
+    // Fetch all users
+    axios
+      .get("https://holiday-api-zj3a.onrender.com/api/v1/auth/users")
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+      });
+
+    // Fetch all tours
+    axios
+      .get("https://holiday-api-zj3a.onrender.com/api/v1/tour/all")
+      .then((response) => {
+        setTours(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching tours:", error);
+      });
+  }, []);
+
+  // Function to handle the booking deletion
+  const handleBookingDeletion = (bookingId) => {
+    axios
+      .delete(
+        `https://holiday-api-zj3a.onrender.com/api/v1/booking/${bookingId}`
+      )
+      .then((response) => {
+        // Show a success notification
+        Notiflix.Notify.success("Booking deleted successfully");
+
+        // Remove the deleted booking from the state
+        setBookings((prevBookings) =>
+          prevBookings.filter((booking) => booking._id !== bookingId)
+        );
+      })
+      .catch((error) => {
+        console.error("Error deleting booking:", error);
+
+        // Show an error notification
+        Notiflix.Notify.failure("Failed to delete the booking");
+      });
+  };
+
+  if (loading) {
+    return (
+      <div class="loader-wrapper">
+        <div class="loader">
+          <div class="circle outer">
+            <div class="circle middle">
+              <div class="circle inner">
+                <div class="circle inniest"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div>Error: {error.message} </div>;
+  }
+
   return (
     <section className="dashboard-main">
       <div className="dashboard-user-sec">
@@ -17,7 +107,7 @@ function dashboardPlace() {
                   </div>
                   <div className="total-bookings">
                     <span className="total-booking">
-                      total bookings <b>27</b>
+                      total bookings <b>{bookingLength}</b>
                     </span>
                   </div>
                 </div>
@@ -29,25 +119,53 @@ function dashboardPlace() {
                     <div className="row">
                       <span style={{ flexBasis: "5%" }}>#id</span>
                       <span style={{ flexBasis: "20%" }}>tour name</span>
-                      <span style={{ flexBasis: "20%" }}>traveller's name</span>
-                      <span style={{ flexBasis: "10%" }}>Group size</span>
-                      <span style={{ flexBasis: "15%" }}>pay method</span>
+                      <span style={{ flexBasis: "20%" }}>traveller</span>
+                      <span style={{ flexBasis: "12%" }}>Group size</span>
+                      <span style={{ flexBasis: "12%" }}>pay method</span>
                       <span style={{ flexBasis: "10%" }}>status</span>
                       <span style={{ flexBasis: "20%" }}>action</span>
                     </div>
                   </div>
+                  {/* Your existing JSX for booking header here */}
                   <div className="bookings-content">
                     <div className="row">
-                      <span style={{ flexBasis: "5%" }}>001</span>
-                      <span style={{ flexBasis: "20%" }}>visit buja</span>
-                      <span style={{ flexBasis: "20%" }}>iman gadhzi</span>
-                      <span style={{ flexBasis: "10%" }}>6</span>
-                      <span style={{ flexBasis: "15%" }}>Momo</span>
-                      <span style={{ flexBasis: "10%" }}>paid</span>
-                      <span style={{ flexBasis: "20%" }}>
-                        {" "}
-                        <button>delete</button>{" "}
-                      </span>
+                      {bookings.map((booking, index) => (
+                        <div key={index} className="booking-row row">
+                          <span style={{ flexBasis: "5%" }}>{index + 1}</span>
+                          <span style={{ flexBasis: "20%" }}>
+                            {tours.find((tour) => tour._id === booking.tourID)
+                              ?.destination || "N/A"}
+                          </span>
+                          <span style={{ flexBasis: "20%" }}>
+                            {/* {users.find((user) => user._id === booking.UserID)
+                              ?.fullName || "N/A"} */}
+                            {booking.email || "N/A"}
+                          </span>
+                          <span style={{ flexBasis: "12%" }}>
+                            {booking.NumberOfTicket || "N/A"}
+                          </span>
+                          <span style={{ flexBasis: "12%" }}>
+                            {booking.paymentMethod || "N/A"}
+                          </span>
+                          <span style={{ flexBasis: "10%" }}>
+                            {booking.Status || "N/A"}
+                          </span>
+                          <span
+                            className="booking-btn"
+                            style={{ flexBasis: "20%" }}
+                          >
+                            <button
+                              className="delete-booking"
+                              onClick={() => handleBookingDeletion(booking._id)}
+                            >
+                              <FaTrash />
+                            </button>
+                            <button className="edit-booking">
+                              <BiSolidEditAlt />
+                            </button>
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -60,4 +178,4 @@ function dashboardPlace() {
   );
 }
 
-export default dashboardPlace;
+export default DashboardBooking;

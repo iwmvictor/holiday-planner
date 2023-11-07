@@ -43,7 +43,7 @@ function DashboardChat() {
 
       if (res.status === 200) {
         Notiflix.Notify.info("Message deleted successfully");
-        // window.location.reload();
+        window.location.reload();
       } else {
         // Handle other status codes as needed
         Notiflix.Notify.failure("Failed to delete the message.");
