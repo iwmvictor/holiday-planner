@@ -471,6 +471,11 @@ ul {
   position: relative;
 }
 
+.active{
+  background: var(--yellow-color);
+  color: var(--white-color);
+}
+
 .col-12,
 .col-11,
 .col-10,

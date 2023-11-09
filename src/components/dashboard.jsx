@@ -202,7 +202,7 @@ function dashboard() {
                         <div className="row">
                           <div className="text1">
                             <h5 className="h5-title">Number of Users</h5>
-                            <span className="booking-value">{numUsers}</span>
+                            <span className="booking-value">{numUsers || 'Loading ..'}</span>
                           </div>
                           <div className="side-icon">
                             <FaUmbrellaBeach style={{ color: "#a5a5a5" }} />
@@ -224,7 +224,7 @@ function dashboard() {
                         <div className="row">
                           <div className="text1">
                             <h5 className="h5-title">Total Tours</h5>
-                            <span className="expense-value">{numberOfTours}</span>
+                            <span className="expense-value">{numberOfTours || 'Loading ..'}</span>
                           </div>
                           <div className="side-icon">
                             <FaUmbrellaBeach style={{ color: "#a5a5a5" }} />
@@ -305,7 +305,7 @@ function dashboard() {
                   <div className="friend">
                     <div className="container">
                       <div className="sec-title">
-                        <h4 className="h4-title">My Friends</h4>
+                        <h4 className="h4-title">Tours Available</h4>
                       </div>
                       <div className="friend-list">
                         <div className="friend-box">

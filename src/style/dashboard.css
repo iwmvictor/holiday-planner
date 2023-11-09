@@ -1124,7 +1124,7 @@ span.chat-user-msg.col-6 p {
 }
 
 .dashboard-user-sec .container .row .dashboard-user-header {
-  padding: 10px 0 20px 0;
+  padding: 10px 0 13px 0;
 }
 
 .dashboard-user-sec .container .row .dashboard-user-header .row {
@@ -1225,6 +1225,64 @@ span.chat-user-msg.col-6 p {
   box-shadow: 0 0 6px wheat;
 }
 
+ul.pagination {
+  padding: 5px;
+  border-radius: 5px;
+  background: var(--background-light);
+  justify-content: space-between;
+}
+
+ul.pagination {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  transition: var(--transition);
+}
+
+.user-main-header{
+  margin: -6px;
+}
+
+
+
+
+.pagination li .page-link-btn {
+  border: none;
+  height: 40px;
+  padding: 0 15px;
+  font-size: 20px;
+  font-weight: bold;
+  align-items: center;
+  cursor: context-menu;
+  display: inline-flex;
+  color: var(--dark-color);
+  justify-content: center;
+  background: rgb(0 0 0 / 6%);
+  transition: var(--transition);
+  box-shadow: 0 0 1px var(--white-color);
+}
+
+.pagination li .page-link-btn:hover {
+  background: rgb(0 0 0 / 20%);
+  box-shadow: 0 0 1px rgb(0 0 0 / 16%);
+}
+
+
+
+.numberedPage .page-item{
+  padding: 7px;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--content-light);
+  background: var(--white-color);
+}
+
+.active a.page-item{
+  color: var(--white-color);
+  background: var(--yellow-color);
+}
+
 .user-main-content .row .user-list-header {
   padding: 5px 0;
   background: var(--background-light);
@@ -1249,6 +1307,7 @@ span.chat-user-msg.col-6 p {
 
 .user-main-content .row .user-list .user-detail {
   border-bottom: 1px solid var(--content-light);
+  padding: 5px;
 }
 
 .user-main-content .row .user-list .user-detail:last-child {
@@ -1888,7 +1947,7 @@ span.booking-btn {
   justify-content: space-between;
 }
 
-span.booking-btn button{
+span.booking-btn button {
   margin-right: 1px;
   flex-basis: 40%;
   font-size: 10px;
@@ -1902,11 +1961,11 @@ span.booking-btn button{
   transition: var(--transition);
 }
 
-span.booking-btn button:last-child{
+span.booking-btn button:last-child {
   background: var(--background-light);
 }
 
-span.booking-btn button:hover{
+span.booking-btn button:hover {
   color: var(--white-color);
   background: var(--yellow-color);
   border-color: var(--background-light);

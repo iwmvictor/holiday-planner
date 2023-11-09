@@ -1268,14 +1268,6 @@ function home() {
                   ></div>
                 </div>
               </div>
-              <div className="col-2">
-                <div className="instagram-slide-box">
-                  <div
-                    className="instagram-slide-image back-image"
-                    style={instagramStyle4}
-                  ></div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

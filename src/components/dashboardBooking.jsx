@@ -35,7 +35,7 @@ function DashboardBooking() {
       })
       .catch((error) => {
         console.error("Error fetching users:", error);
-      });
+      }); 
 
     // Fetch all tours
     axios
@@ -49,27 +49,61 @@ function DashboardBooking() {
   }, []);
 
   // Function to handle the booking deletion
-  const handleBookingDeletion = (bookingId) => {
-    axios
-      .delete(
-        `https://holiday-api-zj3a.onrender.com/api/v1/booking/${bookingId}`
-      )
-      .then((response) => {
-        // Show a success notification
-        Notiflix.Notify.success("Booking deleted successfully");
+  // const handleBookingDeletion = (bookingId) => {
+  //   axios
+  //     .delete(
+  //       `https://holiday-api-zj3a.onrender.com/api/v1/booking/${bookingId}`
+  //     )
+  //     .then((response) => {
+  //       // Show a success notification
+  //       Notiflix.Notify.success("Booking deleted successfully");
 
-        // Remove the deleted booking from the state
-        setBookings((prevBookings) =>
-          prevBookings.filter((booking) => booking._id !== bookingId)
-        );
-      })
-      .catch((error) => {
-        console.error("Error deleting booking:", error);
+  //       // Remove the deleted booking from the state
+  //       setBookings((prevBookings) =>
+  //         prevBookings.filter((booking) => booking._id !== bookingId)
+  //       );
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error deleting booking:", error);
 
-        // Show an error notification
-        Notiflix.Notify.failure("Failed to delete the booking");
-      });
+  //       // Show an error notification
+  //       Notiflix.Notify.failure("Failed to delete the booking");
+  //     });
+  // };
+  
+
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [tourToDelete, setTourToDelete] = useState(null);
+  const handleConfirmDelete = async (bookingId) => {
+    try {
+      Notiflix.Confirm.show(
+        "DELETE BOOKING",
+        "Do you really wanna delete this booking?",
+        "YES",
+        "NO",
+        async () => {
+          const res = await axios.delete(
+            `https://holiday-api-zj3a.onrender.com/api/v1/booking/${bookingId}`
+          );
+          window.location.reload();
+        },
+        () => {
+          Notiflix.Notify.info("You've canceled delete operation..");
+        },
+        {}
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
+  const handleDeleteClick = (tours) => {
+    setTourToDelete(tours);
+    handleConfirmDelete();
+  };
+  const handleCancelDelete = () => {
+    setShowDeleteConfirm(false);
+  };
+
 
   if (loading) {
     return (
@@ -156,7 +190,7 @@ function DashboardBooking() {
                           >
                             <button
                               className="delete-booking"
-                              onClick={() => handleBookingDeletion(booking._id)}
+                              onClick={() => handleConfirmDelete(booking._id)}
                             >
                               <FaTrash />
                             </button>

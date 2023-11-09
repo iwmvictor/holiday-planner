@@ -90,6 +90,14 @@ function dashboardUser() {
     );
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 8;
+  const lastIndex = currentPage * recordsPerPage;
+  const firstIndex = lastIndex - recordsPerPage;
+  const records = users.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(users.length / recordsPerPage);
+  const numbers = [...Array(npage + 1).keys()].slice(1);
+
   if (loading) {
     return (
       <div class="loader-wrapper">
@@ -133,34 +141,32 @@ function dashboardUser() {
               <div className="user-container">
                 <div className="row">
                   <div className="user-main-header">
-                    <div className="row">
-                      <div className="left-side">
-                        <div className="filter-icon" title="filter">
-                          <BiFilter style={{ fontSize: "28px" }} />
-                        </div>
-                        <div className="input-box no-arrow">
-                          <span className="icon">
-                            <FaSearch />
-                          </span>
-                          <input
-                            type="search"
-                            name=""
-                            placeholder="Search user ..."
-                            className="form-input"
-                          />
-                        </div>
-                      </div>
-                      <div className="right-side">
-                        <div className="topdf-icon" title="pdf">
-                          <FaFilePdf />
-                        </div>
-                        <div className="toexcel-icon" title="excel">
-                          <FaFileExcel />
-                        </div>
-                        <div className="print-icon" title="print">
-                          <FaPrint />
-                        </div>
-                      </div>
+                    <div className="pagination-wp col-12">
+                      <ul className="pagination col-12">
+                        <li className="page-item prev-btn">
+                          <a onClick={prePage} className="page-link-btn">
+                            Prev
+                          </a>
+                        </li>
+                        {numbers.map((n, i) => (
+                          <li
+                            className={`page-item numberedPage ${
+                              currentPage === n ? "active" : ""
+                            }`}
+                            key={i}
+                          >
+                            <a onClick={changeCPage} className="page-item">
+                              {n}
+                            </a>
+                          </li>
+                        ))}
+
+                        <li className="page-item next-btn">
+                          <a onClick={nextPage} className="page-link-btn">
+                            Next
+                          </a>
+                        </li>
+                      </ul>
                     </div>
                   </div>
 
@@ -421,8 +427,8 @@ function dashboardUser() {
                     <div className="row">
                       <div className="user-list-header">
                         <div className="row">
-                          <div className="user-check-box input-box col-1">
-                            <input type="checkbox" className="form-input" />
+                          <div className="user-check-box col-1">
+                            <h4>ID</h4>
                           </div>
                           <div className="user-fullname-header col-3">
                             <h4>Full name</h4>
@@ -445,11 +451,11 @@ function dashboardUser() {
                         </div>
                       </div>
                       <div className="user-list">
-                        {users.map((user) => (
+                        {records.map((user, index) => (
                           <div className="user-detail" key={user._id}>
                             <div className="row col-12">
-                              <div className="user-check-box input-box col-1">
-                                <input type="checkbox" className="form-input" />
+                              <div className="user-check-box col-1">
+                                {lastIndex+index-recordsPerPage+1}
                               </div>
                               <div className="user-fullname col-2">
                                 <span className="userName">
@@ -501,6 +507,20 @@ function dashboardUser() {
       </div>
     </section>
   );
+
+  function prePage() {
+    if (currentPage !== firstIndex) {
+      setCurrentPage(currentPage - 1);
+    }
+  }
+  function nextPage() {
+    if (currentPage !== lastIndex) {
+      setCurrentPage(currentPage + 1);
+    }
+  }
+  function changeCPage(id) {
+    setCurrentPage(id);
+  }
 }
 
 export default dashboardUser;
