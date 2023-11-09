@@ -187,6 +187,19 @@ ul {
   list-style: none;
 }
 
+.pt-70{
+  padding-top: 70px;
+}
+.mt-30{
+  margin-top: 30px;
+}
+.pb-70{
+  padding-bottom: 70px;
+}
+.bg-f6{
+  background: var(--white-light-color);
+}
+
 .row {
   display: flex;
   display: -ms-flexbox;
@@ -1034,6 +1047,476 @@ form.form {
   text-shadow: 0 0 3px black;
 }
 
+
+/* ===HOME TOUR =====*/
+
+/* ----TOUR SERVICES -----*/
+
+.tour-services-row {
+  width: 100%;
+  padding: 40px 50px;
+  background: var(--yellow-color);
+  position: relative;
+  z-index: 2;
+}
+
+.tour-services-row:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%);
+  z-index: -1;
+}
+
+.tour-service-box {
+  display: flex;
+  align-items: flex-start;
+}
+
+.tour-service-box .tour-service-icon {
+  width: 50px;
+  flex: 0 0 50px;
+  margin-right: 15px;
+}
+
+.tour-service-content .h4-title {
+  color: var(--white-color);
+}
+
+.tour-service-content p {
+  margin-bottom: 0;
+  color: var(--white-color);
+}
+
+.tour-services {
+  margin-top: -50px;
+  position: relative;
+  z-index: 2;
+}
+
+
+/*--- Tour services End ---*/
+
+.tour-box {
+  background: var(--white-color);
+  box-shadow: var(--box-shadow);
+}
+
+.tour-box .tour-box-image {
+  width: 100%;
+  height: 250px;
+  position: relative;
+}
+
+.tour-box-content {
+  border-left: 3px solid var(--yellow-color);
+  padding: 30px 20px 15px 20px;
+  position: relative;
+}
+
+.tour-box-label .h4-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 0;
+  color: var(--white-color);
+  text-transform: uppercase;
+}
+
+.tour-box-label {
+  display: inline-block;
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  right: 20px;
+}
+
+.tour-box-inner-label {
+  background: var(--yellow-color);
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+.tour-box-title .h4-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.tour-box-description {
+  margin-bottom: 15px;
+}
+
+.tour-box-description p {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  opacity: 0.6;
+}
+
+.tour-info-box {
+  padding: 15px 0;
+  border-top: 1px solid rgb(43 43 43 / 0.1);
+  border-bottom: 1px solid rgb(43 43 43 / 0.1);
+}
+
+.tour-info {
+  display: flex;
+  align-items: flex-start;
+}
+
+.tour-info-icon i {
+  font-size: 25px;
+  color: var(--yellow-color);
+}
+
+.tour-info-icon {
+  margin-right: 10px;
+}
+
+.tour-info-content {
+  flex: 1;
+}
+
+.tour-info-content .h6-title {
+  margin-bottom: 0;
+}
+
+.tour-info-content p {
+  font-size: 12px;
+  line-height: 14px;
+  opacity: 0.6;
+}
+
+.tour-box-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-top: 15px;
+}
+
+.book-now-button .btn {
+    width: 120px;
+}
+
+.tour-slider .slick-list {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.tour-slider.slick-slider {
+    margin-bottom: 0;
+}
+
+.tour-slider .slick-arrow {
+    top: -115px;
+    right: 15px;
+    left: auto;
+    transform: unset;
+}
+
+.tour-slider .next-arrow.slick-arrow {
+    top: -60px;
+}
+
+.tour-sec {
+    padding-bottom: 227px;
+}
+
+.tour-slider .slick-dots {
+    bottom: -45px;
+}
+
+/*==========Tour CSS End==========*/
+
+
+/*==========Testimonial CSS Start==========*/
+
+.testimonial-left-side {
+  position: relative;
+  margin-top: -112px;
+  z-index: 2;
+}
+
+.testimonial-left-side:before {
+  content: '';
+  position: absolute;
+  background: var(--yellow-color);
+  width: 500%;
+  height: 100%;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.testimonial-left-side .sec-title .line-title {
+  border-color: var(--white-color);
+}
+
+.testimonial-left-side .sec-title .line-title .h4-title {
+  color: var(--white-color);
+}
+
+.testimonial-left-side .sec-title .h2-title {
+  color: var(--white-color);
+}
+
+.testimonial-quote {
+  background: var(--white-color);
+  text-align: right;
+  padding: 112px 0 0 0;
+}
+
+.testimonial-quote img {
+  width: 295px;
+}
+
+.testimonial-right-side {
+  padding: 70px 0 0 0;
+}
+
+.testimonial-slide .overflow-text {
+  max-height: unset;
+  height: 178px;
+}
+
+.testimonial-slide .overflow-text p {
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 35px;
+}
+
+.testimonial-stars {
+  font-size: 0;
+  margin-bottom: 18px;
+}
+
+.testimonial-stars i {
+  color: var(--yellow-color);
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.testimonial-stars i:last-child {
+  margin-right: 0;
+}
+
+.testimonial-name {
+  margin-top: 18px;
+}
+
+.testimonial-name .h3-title {
+  color: var(--yellow-color);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.testimonial-name .rated {
+  color: var(--dark-color);
+  opacity: 0.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-weight: 300;
+}
+
+.testimonial-slider.slick-slider {
+  margin-bottom: 35px;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.testimonial-slide {
+  padding: 0 15px;
+}
+
+.testimonial-slider .slick-dots {
+  text-align: left;
+  bottom: -35px;
+  padding-left: 15px;
+}
+
+
+/*==========Testimonial CSS End==========*/
+
+
+/*==========Blog CSS Start==========*/
+
+.main-blog .sec-title,
+.main-blog .sec-title .h2-title {
+    margin-bottom: 0;
+}
+
+.blog-learn-btn {
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.blog-learn-btn.for-des {
+    display: flex !important;
+}
+
+.blog-learn-btn.for-mob {
+    display: none !important;
+}
+
+.blog-slider{
+  margin-top: 30px;
+}
+
+.blog-box {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.blog-image {
+    width: 100%;
+    height: 400px;
+    transition: var(--transition);
+}
+
+.blog-box:hover .blog-image {
+    transform: scale(1.2);
+}
+
+.blog-box-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    padding: 30px;
+    width: 100%;
+    transition: var(--transition);
+}
+
+.blog-box:hover .blog-box-content {
+    padding-bottom: 40px;
+}
+
+.blog-box-content * {
+    color: var(--white-color);
+}
+
+.blog-box-content .h3-title {
+    font-size: 25px;
+    line-height: 35px;
+}
+
+.blog-box-content .h3-title a {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.blog-box-content .date {
+    font-weight: 300;
+}
+
+.blog-box-content a:hover {
+    color: var(--yellow-color);
+}
+
+.blog-box-content p {
+    margin-bottom: 0;
+}
+
+
+/*==========Blog CSS End==========*/
+
+
+/*==========Instagram CSS Start==========*/
+
+.main-instagram .sec-title .h2-title a {
+    color: var(--dark-color);
+}
+
+.main-instagram .sec-title .h2-title a:hover {
+    color: var(--yellow-color);
+}
+
+.instagram-icon {
+    position: absolute;
+    font-size: 200px;
+    line-height: 1;
+    top: 50%;
+    left: 4%;
+    transform: translate(0, -50%);
+    color: var(--yellow-color);
+    opacity: 0.3;
+}
+
+.instagram-slide-box {
+    width: 100%;
+    height: 170px;
+    overflow: hidden;
+}
+
+.instagram-slide-box .instagram-slide-image {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.instagram-slide-box:hover .instagram-slide-image {
+    transform: scale(1.2) rotate(2deg);
+}
+
+
+/*==========Instagram CSS End==========*/
+
+
+/*==========Partners CSS Start==========*/
+
+.partners-logo-box {
+    position: relative;
+    background: var(--white-color);
+    border-left: 3px solid var(--yellow-color);
+    border-right: 3px solid var(--yellow-color);
+    width: 100%;
+    height: 100px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 30px;
+    box-shadow: var(--box-shadow);
+    border-radius: 10px;
+}
+
+.partners-logo-box img {
+    filter: grayscale(1);
+    transition: var(--transition);
+}
+
+.partners-logo-box:hover img {
+    filter: grayscale(0);
+}
+
+.partners-slider .slick-list {
+    padding: 10px 0;
+}
+
+
+/*==========Partners CSS End==========*/
+
+
+
+
+
 /*==============NAVBAR STYLES===========*/
 
 .navlink ul {
@@ -1105,65 +1588,11 @@ form.form {
   }
 }
 
-/* .navlink {
-  ul {
-    list-style: none;
-    padding: 0;
-  }
 
-  li {
-    a {
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      padding: 10px 20px;
-      color: #333;
-      transition: background-color var(--transition);
 
-      &:hover {
-        background-color: #f0f0f0;
-      }
-    }
 
-    .submenu {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      z-index: 1;
 
-      li {
-        a {
-          padding: 10px 20px;
 
-          &:hover {
-            background-color: #f0f0f0;
-          }
-        }
-      }
-    }
-
-    &.active .submenu {
-      display: flex;
-    }
-
-    &.dropdown-items {
-      position: relative;
-
-      a {
-        display: flex;
-        justify-content: space-between;
-      }
-
-      svg {
-        margin-left: auto;
-      }
-    }
-  }
-} */
 
 .bottom-header-container {
   width: 93%;
@@ -1371,6 +1800,7 @@ form.form {
 
 .tour-sec {
   padding-bottom: 227px;
+  padding-top: 70px;
 }
 
 .row.tour-form-container {
@@ -2969,3 +3399,5 @@ footer.footer {
     padding: 15px;
   }
 }
+
+

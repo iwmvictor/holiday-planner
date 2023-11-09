@@ -15,8 +15,6 @@ import { GoDotFill } from "react-icons/go";
 import { RxBorderDashed } from "react-icons/rx";
 import { HiOutlineLogout } from "react-icons/hi";
 import { CiLocationOn, CiPlane } from "react-icons/ci";
-import { GiCommercialAirplane } from "react-icons/gi";
-import { RiCalendarTodoFill } from "react-icons/ri";
 import { BiTimer, BiCreditCard, BiSlider } from "react-icons/bi";
 import {
   FaRegCalendarAlt,

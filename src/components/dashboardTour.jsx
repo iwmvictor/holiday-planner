@@ -21,9 +21,6 @@ import {
 } from "react-icons/md";
 import { TbDiscountCheckFilled } from "react-icons/tb";
 
-import abtImg from "../assets/about-banner.jpg";
-import loaderImg from "../assets/ajax-loader.gif";
-
 function dashboardTour() {
   const [formData, setFormData] = useState({
     destination: "",
